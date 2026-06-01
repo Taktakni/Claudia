@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique | MONTPLAISIR LAVAGE AUTO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+:root {
+    --bleu-fonce: #071B3B;
+    --bleu-electrique: #0066FF;
+    --orange: #FF8C00;
+    --blanc: #FFFFFF;
+    --gris-clair: #f8f9fa;
+    --gris-border: #e1e5eb;
+    --rouge: #ff4757;
+    --vert: #25D366;
+    --shadow: 0 10px 40px rgba(0,102,255,0.15);
+    --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Poppins',sans-serif; background:var(--gris-clair); color:var(--bleu-fonce); min-height:100vh; }
+a { text-decoration:none; color:inherit; }
+
+/* HEADER */
+.shop-header {
+    background:linear-gradient(135deg, var(--bleu-fonce), #0a2a5e);
+    padding:20px 0;
+    position:sticky; top:0; z-index:100;
+    box-shadow:0 5px 30px rgba(0,0,0,0.3);
+}
+.shop-header .container {
+    max-width:1200px; margin:0 auto; padding:0 20px;
+    display:flex; align-items:center; justify-content:space-between;
+}
+.logo { color:var(--blanc); font-size:1.3rem; font-weight:800; display:flex; align-items:center; gap:8px; }
+.logo i { color:var(--orange); font-size:1.5rem; }
+.nav-links { display:flex; align-items:center; gap:25px; }
+.nav-links a { color:rgba(255,255,255,0.8); font-size:0.9rem; font-weight:500; transition:var(--transition); }
+.nav-links a:hover { color:var(--orange); }
+.nav-links a.active { color:var(--orange); font-weight:600; }
+.cart-badge {
+    position:relative; background:var(--orange); color:var(--blanc);
+    width:22px; height:22px; border-radius:50%; font-size:0.7rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    position:absolute; top:-8px; right:-10px;
+}
+.btn-cart-header {
+    position:relative; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
+    color:var(--blanc); padding:10px 18px; border-radius:50px; font-size:0.85rem;
+    font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer; transition:var(--transition);
+}
+.btn-cart-header:hover { background:rgba(255,255,255,0.2); }
+
+/* MAIN LAYOUT */
+.container { max-width:1200px; margin:0 auto; padding:0 20px; }
+.shop-layout { display:grid; grid-template-columns:1fr 360px; gap:30px; padding:30px 0; }
+
+/* HERO BANNER */
+.shop-banner {
+    background:linear-gradient(135deg, var(--bleu-electrique), #0052cc);
+    border-radius:20px; padding:40px; margin:30px auto; max-width:1200px;
+    color:var(--blanc); text-align:center;
+}
+.shop-banner h1 { font-size:2rem; font-weight:800; margin-bottom:10px; }
+.shop-banner p { font-size:1rem; opacity:0.9; }
+
+/* FILTERS */
+.filter-tabs {
+    display:flex; gap:10px; margin-bottom:25px; flex-wrap:wrap;
+}
+.filter-tab {
+    padding:10px 22px; border-radius:50px; font-size:0.85rem; font-weight:600;
+    border:2px solid var(--gris-border); background:var(--blanc); color:var(--bleu-fonce);
+    cursor:pointer; transition:var(--transition);
+}
+.filter-tab:hover { border-color:var(--bleu-electrique); color:var(--bleu-electrique); }
+.filter-tab.active { background:var(--bleu-electrique); color:var(--blanc); border-color:var(--bleu-electrique); }
+
+/* PRODUCT GRID */
+.products-grid {
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:20px;
+}
+.product-card {
+    background:var(--blanc); border-radius:18px; overflow:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,0.06); transition:var(--transition);
+    border:1px solid transparent;
+}
+.product-card:hover { transform:translateY(-5px); box-shadow:var(--shadow); border-color:var(--bleu-electrique); }
+.product-card img { width:100%; height:180px; object-fit:cover; }
+.product-info { padding:20px; }
+.product-info h3 { font-size:1rem; font-weight:700; margin-bottom:6px; color:var(--bleu-fonce); }
+.product-info .product-desc { font-size:0.82rem; color:#666; margin-bottom:12px; line-height:1.5; }
+.product-info .product-price { font-size:1.2rem; font-weight:800; color:var(--bleu-electrique); margin-bottom:12px; }
+.product-info .product-category { font-size:0.72rem; font-weight:600; color:var(--orange); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
+.btn-add-cart {
+    width:100%; padding:12px; background:linear-gradient(135deg, var(--bleu-electrique), #0052cc);
+    color:var(--blanc); border:none; border-radius:10px; font-size:0.85rem; font-weight:600;
+    font-family:'Poppins',sans-serif; cursor:pointer; transition:var(--transition);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.btn-add-cart:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,102,255,0.3); }
+
+/* CART SIDEBAR */
+.cart-sidebar {
+    background:var(--blanc); border-radius:18px; padding:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.06); position:sticky; top:100px;
+    max-height:calc(100vh - 120px); overflow-y:auto;
+}
+.cart-title { font-size:1.1rem; font-weight:700; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+.cart-title i { color:var(--orange); }
+.cart-empty { text-align:center; padding:30px 0; color:#999; font-size:0.9rem; }
+.cart-empty i { font-size:2.5rem; display:block; margin-bottom:10px; color:var(--gris-border); }
+.cart-item {
+    display:flex; align-items:center; gap:12px; padding:12px 0;
+    border-bottom:1px solid var(--gris-border);
+}
+.cart-item:last-of-type { border-bottom:none; }
+.cart-item-info { flex:1; }
+.cart-item-info h4 { font-size:0.82rem; font-weight:600; margin-bottom:3px; }
+.cart-item-info span { font-size:0.78rem; color:#666; }
+.cart-item-qty {
+    display:flex; align-items:center; gap:8px;
+}
+.cart-item-qty button {
+    width:26px; height:26px; border-radius:6px; border:1px solid var(--gris-border);
+    background:var(--gris-clair); font-size:0.8rem; cursor:pointer; transition:var(--transition);
+    display:flex; align-items:center; justify-content:center;
+}
+.cart-item-qty button:hover { background:var(--bleu-electrique); color:var(--blanc); border-color:var(--bleu-electrique); }
+.cart-item-qty span { font-size:0.85rem; font-weight:700; min-width:20px; text-align:center; }
+.cart-item-remove {
+    background:none; border:none; color:var(--rouge); font-size:0.85rem; cursor:pointer; transition:var(--transition);
+}
+.cart-item-remove:hover { transform:scale(1.2); }
+.cart-total {
+    margin-top:20px; padding-top:15px; border-top:2px solid var(--gris-border);
+    display:flex; align-items:center; justify-content:space-between;
+}
+.cart-total span { font-size:0.9rem; font-weight:600; }
+.cart-total strong { font-size:1.2rem; font-weight:800; color:var(--bleu-electrique); }
+
+/* CHECKOUT FORM */
+.checkout-section { margin-top:20px; padding-top:20px; border-top:2px solid var(--gris-border); }
+.checkout-section h4 { font-size:0.95rem; font-weight:700; margin-bottom:15px; color:var(--bleu-fonce); }
+.checkout-section .form-group { margin-bottom:12px; }
+.checkout-section label { display:block; font-size:0.78rem; font-weight:600; color:var(--bleu-fonce); margin-bottom:5px; }
+.checkout-section input {
+    width:100%; padding:11px 14px; border:1.5px solid var(--gris-border); border-radius:10px;
+    font-family:'Poppins',sans-serif; font-size:0.85rem; outline:none; transition:var(--transition);
+}
+.checkout-section input:focus { border-color:var(--bleu-electrique); box-shadow:0 0 0 3px rgba(0,102,255,0.08); }
+.btn-checkout {
+    width:100%; padding:14px; margin-top:15px;
+    background:linear-gradient(135deg, var(--vert), #128C7E);
+    color:var(--blanc); border:none; border-radius:12px; font-size:0.95rem; font-weight:700;
+    font-family:'Poppins',sans-serif; cursor:pointer; transition:var(--transition);
+    display:flex; align-items:center; justify-content:center; gap:10px;
+}
+.btn-checkout:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(37,211,102,0.3); }
+.btn-checkout:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+/* ALERTS */
+.alert { padding:12px 16px; border-radius:10px; font-size:0.85rem; font-weight:500; margin-bottom:15px; display:none; }
+.alert.success { background:rgba(37,211,102,0.1); color:var(--vert); border:1px solid rgba(37,211,102,0.2); }
+.alert.error { background:rgba(255,71,87,0.1); color:var(--rouge); border:1px solid rgba(255,71,87,0.2); }
+.alert.active { display:block; }
+
+/* RESPONSIVE */
+@media(max-width:992px) {
+    .shop-layout { grid-template-columns:1fr; }
+    .cart-sidebar { position:static; max-height:none; }
+    .nav-links { gap:15px; }
+}
+@media(max-width:768px) {
+    .products-grid { grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); }
+    .shop-banner { padding:25px 20px; }
+    .shop-banner h1 { font-size:1.4rem; }
+    .nav-links a span { display:none; }
+}
+@media(max-width:480px) {
+    .products-grid { grid-template-columns:1fr; }
+    .filter-tabs { gap:6px; }
+    .filter-tab { padding:8px 16px; font-size:0.8rem; }
+}
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="shop-header">
+        <div class="container">
+            <a href="index.html" class="logo"><i class="fas fa-car-side"></i> MONTPLAISIR</a>
+            <nav class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="boutique.html" class="active">Boutique</a>
+                <a href="profile.html">Mon Profil</a>
+            </nav>
+            <button class="btn-cart-header" onclick="document.querySelector('.cart-sidebar').scrollIntoView({behavior:'smooth'})">
+                <i class="fas fa-shopping-cart"></i> Panier
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- BANNER -->
+    <div class="container">
+        <div class="shop-banner">
+            <h1><i class="fas fa-store"></i> Notre Boutique</h1>
+            <p>Découvrez nos produits et accessoires pour votre véhicule</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <div class="shop-layout">
+            <!-- Products Section -->
+            <div class="products-section">
+                <!-- Filters -->
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-category="all">Tous</button>
+                    <button class="filter-tab" data-category="Produits">Produits</button>
+                    <button class="filter-tab" data-category="Accessoires">Accessoires</button>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="products-grid" id="productsGrid"></div>
+            </div>
+
+            <!-- Cart Sidebar -->
+            <aside class="cart-sidebar">
+                <h3 class="cart-title"><i class="fas fa-shopping-cart"></i> Mon Panier</h3>
+                <div id="cartAlert"></div>
+                <div id="cartItems">
+                    <div class="cart-empty"><i class="fas fa-shopping-bag"></i> Votre panier est vide</div>
+                </div>
+                <div class="cart-total" id="cartTotalSection" style="display:none;">
+                    <span>Total :</span>
+                    <strong id="cartTotal">0 DA</strong>
+                </div>
+
+                <!-- Checkout Form -->
+                <div class="checkout-section" id="checkoutSection" style="display:none;">
+                    <h4><i class="fas fa-truck"></i> Informations de livraison</h4>
+                    <form id="checkoutForm">
+                        <div class="form-group">
+                            <label>Nom complet *</label>
+                            <input type="text" id="checkName" placeholder="Votre nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Téléphone *</label>
+                            <input type="tel" id="checkPhone" placeholder="07XX XX XX XX" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse de livraison *</label>
+                            <input type="text" id="checkAddress" placeholder="Votre adresse" required>
+                        </div>
+                        <button type="submit" class="btn-checkout" id="checkoutBtn">
+                            <i class="fas fa-check-circle"></i> Confirmer la commande
+                        </button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="db-clients.js"></script>
+    <script src="db-shop.js"></script>
+    <script>
+    'use strict';
+
+    // ================================== //
+    // STATE                              //
+    // ================================== //
+    let cart = [];
+    let currentFilter = 'all';
+
+    // ================================== //
+    // RENDER PRODUCTS                    //
+    // ================================== //
+    function renderProducts() {
+        const products = currentFilter === 'all'
+            ? ShopDB.getActiveProducts()
+            : ShopDB.getProductsByCategory(currentFilter);
+
+        const grid = document.getElementById('productsGrid');
+        if (products.length === 0) {
+            grid.innerHTML = '<p style="text-align:center;color:#999;padding:40px;">Aucun produit trouvé.</p>';
+            return;
+        }
+
+        grid.innerHTML = products.map(p => `
+            <div class="product-card">
+                <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/400x180?text=Produit'" loading="lazy">
+                <div class="product-info">
+                    <span class="product-category">${p.category}</span>
+                    <h3>${p.name}</h3>
+                    <p class="product-desc">${p.description}</p>
+                    <div class="product-price">${p.price.toLocaleString()} DA</div>
+                    <button class="btn-add-cart" onclick="addToCart('${p.id}')">
+                        <i class="fas fa-cart-plus"></i> Ajouter au panier
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ================================== //
+    // FILTER TABS                        //
+    // ================================== //
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentFilter = tab.dataset.category;
+            renderProducts();
+        });
+    });
+
+    // ================================== //
+    // CART FUNCTIONS                     //
+    // ================================== //
+    function addToCart(productId) {
+        const product = ShopDB.getProduct(productId);
+        if (!product) return;
+
+        const existing = cart.find(item => item.productId === productId);
+        if (existing) {
+            existing.quantity++;
+        } else {
+            cart.push({
+                productId: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: 1
+            });
+        }
+        renderCart();
+    }
+
+    function removeFromCart(productId) {
+        cart = cart.filter(item => item.productId !== productId);
+        renderCart();
+    }
+
+    function updateQuantity(productId, delta) {
+        const item = cart.find(i => i.productId === productId);
+        if (!item) return;
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            removeFromCart(productId);
+            return;
+        }
+        renderCart();
+    }
+
+    function getCartTotal() {
+        return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+
+    function renderCart() {
+        const cartItemsEl = document.getElementById('cartItems');
+        const cartTotalSection = document.getElementById('cartTotalSection');
+        const checkoutSection = document.getElementById('checkoutSection');
+        const cartBadge = document.getElementById('cartBadge');
+
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartBadge.textContent = totalItems;
+
+        if (cart.length === 0) {
+            cartItemsEl.innerHTML = '<div class="cart-empty"><i class="fas fa-shopping-bag"></i> Votre panier est vide</div>';
+            cartTotalSection.style.display = 'none';
+            checkoutSection.style.display = 'none';
+            return;
+        }
+
+        cartItemsEl.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <span>${item.price.toLocaleString()} DA</span>
+                </div>
+                <div class="cart-item-qty">
+                    <button onclick="updateQuantity('${item.productId}', -1)">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="updateQuantity('${item.productId}', 1)">+</button>
+                </div>
+                <button class="cart-item-remove" onclick="removeFromCart('${item.productId}')" title="Supprimer">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `).join('');
+
+        const total = getCartTotal();
+        document.getElementById('cartTotal').textContent = total.toLocaleString() + ' DA';
+        cartTotalSection.style.display = 'flex';
+        checkoutSection.style.display = 'block';
+    }
+
+    // ================================== //
+    // CHECKOUT                           //
+    // ================================== //
+    document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const clientName = document.getElementById('checkName').value.trim();
+        const clientPhone = document.getElementById('checkPhone').value.trim();
+        const clientAddress = document.getElementById('checkAddress').value.trim();
+
+        if (!clientName || !clientPhone || !clientAddress) return;
+
+        // Create order
+        ShopDB.createOrder({
+            items: cart.map(item => ({
+                productId: item.productId,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity
+            })),
+            clientName: clientName,
+            clientPhone: clientPhone,
+            clientAddress: clientAddress,
+            total: getCartTotal()
+        });
+
+        // Show success
+        const alertDiv = document.getElementById('cartAlert');
+        alertDiv.className = 'alert success active';
+        alertDiv.innerHTML = '<i class="fas fa-check-circle"></i> Commande envoyée avec succès ! Nous vous contacterons bientôt.';
+
+        // Reset cart
+        cart = [];
+        renderCart();
+        document.getElementById('checkoutForm').reset();
+
+        // Hide alert after 5s
+        setTimeout(() => { alertDiv.classList.remove('active'); }, 5000);
+    });
+
+    // ================================== //
+    // AUTO-FILL IF LOGGED IN             //
+    // ================================== //
+    function autoFillUser() {
+        if (ClientsDB.isLoggedIn()) {
+            const user = ClientsDB.getCurrentUser();
+            if (user) {
+                document.getElementById('checkName').value = user.firstName + ' ' + user.lastName;
+                document.getElementById('checkPhone').value = user.phone || '';
+                document.getElementById('checkAddress').value = user.address || '';
+            }
+        }
+    }
+
+    // ================================== //
+    // INIT                               //
+    // ================================== //
+    renderProducts();
+    autoFillUser();
+    </script>
+</body>
+</html>

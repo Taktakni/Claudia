@@ -245,6 +245,9 @@ input,select,textarea { font-family:inherit; }
                 <li><a href="#" data-page="gallery"><i class="fas fa-images"></i> Galerie & Médias</a></li>
                 <li><a href="#" data-page="homepage"><i class="fas fa-home"></i> Page d'Accueil</a></li>
                 <li><a href="#" data-page="stats"><i class="fas fa-chart-bar"></i> Statistiques</a></li>
+                <li><a href="#" data-page="tarifs"><i class="fas fa-tags"></i> Tarifs & Prix</a></li>
+                <li><a href="#" data-page="products"><i class="fas fa-store"></i> Boutique / Produits</a></li>
+                <li><a href="#" data-page="orders"><i class="fas fa-shopping-bag"></i> Commandes</a></li>
             </ul>
             <div class="sidebar-divider"></div>
             <ul class="sidebar-menu">
@@ -424,6 +427,75 @@ input,select,textarea { font-family:inherit; }
 
             <!-- PAGE: PARAMÈTRES -->
             <div class="page-section" id="page-settings">
+
+
+            <!-- PAGE: TARIFS & PRIX -->
+            <div class="page-section" id="page-tarifs">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Tarifs & Prix</h3>
+                        <button class="btn-add" onclick="openModal('Tarif')"><i class="fas fa-plus"></i> Nouveau Tarif</button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead><tr><th>#</th><th>Nom</th><th>Description</th><th>Prix</th><th>Catégorie</th><th>Actions</th></tr></thead>
+                            <tbody id="tarifsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- PAGE: BOUTIQUE / PRODUITS -->
+            <div class="page-section" id="page-products">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Boutique / Produits</h3>
+                        <button class="btn-add" onclick="openModal('Product')"><i class="fas fa-plus"></i> Nouveau Produit</button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead><tr><th>#</th><th>Image</th><th>Nom</th><th>Prix</th><th>Catégorie</th><th>Stock</th><th>Statut</th><th>Actions</th></tr></thead>
+                            <tbody id="productsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- PAGE: COMMANDES -->
+            <div class="page-section" id="page-orders">
+                <div class="stats-cards">
+                    <div class="stat-card blue"><div class="stat-header"><div><span class="stat-value" id="ordersTotal">0</span><span class="stat-label">Total commandes</span></div><div class="stat-icon"><i class="fas fa-shopping-bag"></i></div></div></div>
+                    <div class="stat-card orange"><div class="stat-header"><div><span class="stat-value" id="ordersPending">0</span><span class="stat-label">En attente</span></div><div class="stat-icon"><i class="fas fa-clock"></i></div></div></div>
+                    <div class="stat-card green"><div class="stat-header"><div><span class="stat-value" id="ordersDelivered">0</span><span class="stat-label">Livrées</span></div><div class="stat-icon"><i class="fas fa-check-circle"></i></div></div></div>
+                </div>
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Liste des commandes</h3>
+                        <div class="table-filter">
+                            <select id="filterOrderStatus">
+                                <option value="all">Toutes</option>
+                                <option value="pending">En attente</option>
+                                <option value="confirmed">Confirmées</option>
+                                <option value="shipped">Expédiées</option>
+                                <option value="delivered">Livrées</option>
+                                <option value="cancelled">Annulées</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead><tr><th>#</th><th>Client</th><th>Téléphone</th><th>Articles</th><th>Total</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
+                            <tbody id="ordersTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- PAGE: PARAMÈTRES (original) -->
+            <div class="page-section" id="page-settings">
                 <div class="table-container" style="padding:30px;">
                     <h3 style="margin-bottom:20px;">Paramètres du commerce</h3>
                     <form id="settingsForm" class="modal-form">
@@ -538,9 +610,46 @@ input,select,textarea { font-family:inherit; }
         </div>
     </div>
 
+    <!-- Modal: Nouveau Tarif -->
+    <div class="modal-overlay" id="modalTarif">
+        <div class="modal">
+            <div class="modal-header"><h3><i class="fas fa-tags"></i> Nouveau Tarif</h3><button class="modal-close" onclick="closeModal('Tarif')">&times;</button></div>
+            <form class="modal-form" id="formTarif">
+                <div class="form-row">
+                    <div class="form-group"><label>Nom *</label><input type="text" id="tarifName" required></div>
+                    <div class="form-group"><label>Prix (DA) *</label><input type="number" id="tarifPrice" required></div>
+                </div>
+                <div class="form-group"><label>Description</label><textarea id="tarifDesc" placeholder="Description du tarif"></textarea></div>
+                <div class="form-group"><label>Catégorie</label><select id="tarifCategory"><option>Lavage</option><option>Premium</option><option>Abonnement</option></select></div>
+                <div class="modal-actions"><button type="button" class="btn-modal-cancel" onclick="closeModal('Tarif')">Annuler</button><button type="submit" class="btn-modal-save">Enregistrer</button></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Nouveau Produit -->
+    <div class="modal-overlay" id="modalProduct">
+        <div class="modal">
+            <div class="modal-header"><h3><i class="fas fa-store"></i> Nouveau Produit</h3><button class="modal-close" onclick="closeModal('Product')">&times;</button></div>
+            <form class="modal-form" id="formProduct">
+                <div class="form-row">
+                    <div class="form-group"><label>Nom *</label><input type="text" id="productName" required></div>
+                    <div class="form-group"><label>Prix (DA) *</label><input type="number" id="productPrice" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Catégorie</label><select id="productCategory"><option>Produits</option><option>Accessoires</option></select></div>
+                    <div class="form-group"><label>Stock *</label><input type="number" id="productStock" value="10" required></div>
+                </div>
+                <div class="form-group"><label>URL Image</label><input type="url" id="productImage" placeholder="https://..."></div>
+                <div class="form-group"><label>Description</label><textarea id="productDescription" placeholder="Description du produit"></textarea></div>
+                <div class="modal-actions"><button type="button" class="btn-modal-cancel" onclick="closeModal('Product')">Annuler</button><button type="submit" class="btn-modal-save">Enregistrer</button></div>
+            </form>
+        </div>
+    </div>
+
     <!-- DATABASE -->
     <script src="db.js"></script>
     <script src="db-clients.js"></script>
+    <script src="db-shop.js"></script>
 
 
     <!-- ADMIN LOGIC -->
@@ -590,7 +699,8 @@ input,select,textarea { font-family:inherit; }
     const pageTitles = {
         dashboard:'Tableau de bord', appointments:'Rendez-vous', clients:'Clients RDV',
         registered:'Clients Inscrits', services:'Services', reviews:'Avis / Commentaires',
-        gallery:'Galerie & Médias', homepage:"Page d'Accueil", stats:'Statistiques', settings:'Paramètres'
+        gallery:'Galerie & Médias', homepage:"Page d'Accueil", stats:'Statistiques',
+        tarifs:'Tarifs & Prix', products:'Boutique / Produits', orders:'Commandes', settings:'Paramètres'
     };
 
     sidebarLinks.forEach(link => {
@@ -773,6 +883,9 @@ input,select,textarea { font-family:inherit; }
         renderReviews();
         renderGallery();
         renderStats();
+        renderTarifs();
+        renderProducts();
+        renderOrders();
     }
 
     function getBadge(status) {
@@ -947,6 +1060,148 @@ input,select,textarea { font-family:inherit; }
         document.getElementById('monthlyChart').innerHTML = mc.map((v,i) => `
             <div class="bar" style="height:${(v/maxM)*160}px"><span class="bar-value">${v}</span><span class="bar-label">${months[i]}</span></div>`).join('');
     }
+
+
+    // ================================== //
+    // TARIFS CRUD                        //
+    // ================================== //
+    document.getElementById('formTarif').addEventListener('submit', (e) => {
+        e.preventDefault();
+        ShopDB.addTarif({
+            name: document.getElementById('tarifName').value.trim(),
+            price: document.getElementById('tarifPrice').value,
+            description: document.getElementById('tarifDesc').value.trim(),
+            category: document.getElementById('tarifCategory').value
+        });
+        closeModal('Tarif');
+        e.target.reset();
+        refreshAll();
+    });
+
+    function deleteTarif(id) { if(confirm('Supprimer ce tarif ?')){ ShopDB.deleteTarif(id); refreshAll(); } }
+
+    function renderTarifs() {
+        const tarifs = ShopDB.getAllTarifs();
+        document.getElementById('tarifsTable').innerHTML = tarifs.map((t,i) => `
+            <tr>
+                <td>${i+1}</td>
+                <td><strong>${t.name}</strong></td>
+                <td>${t.description || '-'}</td>
+                <td>${t.price.toLocaleString()} DA</td>
+                <td><span class="badge badge-confirmed">${t.category}</span></td>
+                <td><div class="action-btns">
+                    <button class="btn-icon delete" title="Supprimer" onclick="deleteTarif('${t.id}')"><i class="fas fa-trash"></i></button>
+                </div></td>
+            </tr>`).join('');
+    }
+
+    // ================================== //
+    // PRODUCTS CRUD                      //
+    // ================================== //
+    document.getElementById('formProduct').addEventListener('submit', (e) => {
+        e.preventDefault();
+        ShopDB.addProduct({
+            name: document.getElementById('productName').value.trim(),
+            price: document.getElementById('productPrice').value,
+            category: document.getElementById('productCategory').value,
+            stock: document.getElementById('productStock').value,
+            image: document.getElementById('productImage').value.trim(),
+            description: document.getElementById('productDescription').value.trim()
+        });
+        closeModal('Product');
+        e.target.reset();
+        refreshAll();
+    });
+
+    function deleteProduct(id) { if(confirm('Supprimer ce produit ?')){ ShopDB.deleteProduct(id); refreshAll(); } }
+    function toggleProduct(id) { ShopDB.toggleProduct(id); refreshAll(); }
+
+    function renderProducts() {
+        const products = ShopDB.getAllProducts();
+        document.getElementById('productsTable').innerHTML = products.map((p,i) => `
+            <tr>
+                <td>${i+1}</td>
+                <td><img src="${p.image}" alt="${p.name}" style="width:45px;height:45px;object-fit:cover;border-radius:8px;" onerror="this.src='https://via.placeholder.com/45?text=P'"></td>
+                <td><strong>${p.name}</strong></td>
+                <td>${p.price.toLocaleString()} DA</td>
+                <td><span class="badge badge-confirmed">${p.category}</span></td>
+                <td>${p.stock}</td>
+                <td>${p.active ? '<span class="badge badge-completed">Actif</span>' : '<span class="badge badge-cancelled">Inactif</span>'}</td>
+                <td><div class="action-btns">
+                    <button class="btn-icon edit" title="${p.active ? 'Désactiver' : 'Activer'}" onclick="toggleProduct('${p.id}')"><i class="fas fa-${p.active ? 'eye-slash' : 'eye'}"></i></button>
+                    <button class="btn-icon delete" title="Supprimer" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button>
+                </div></td>
+            </tr>`).join('');
+    }
+
+    // ================================== //
+    // ORDERS CRUD                        //
+    // ================================== //
+    function confirmOrder(id) { ShopDB.updateOrderStatus(id, 'confirmed'); refreshAll(); }
+    function shipOrder(id) { ShopDB.updateOrderStatus(id, 'shipped'); refreshAll(); }
+    function deliverOrder(id) { ShopDB.updateOrderStatus(id, 'delivered'); refreshAll(); }
+    function cancelOrder(id) { ShopDB.updateOrderStatus(id, 'cancelled'); refreshAll(); }
+    function deleteOrder(id) { if(confirm('Supprimer cette commande ?')){ ShopDB.deleteOrder(id); refreshAll(); } }
+
+    function getOrderBadge(status) {
+        const labels = { pending:'En attente', confirmed:'Confirmée', shipped:'Expédiée', delivered:'Livrée', cancelled:'Annulée' };
+        const classes = { pending:'badge-pending', confirmed:'badge-confirmed', shipped:'badge-confirmed', delivered:'badge-completed', cancelled:'badge-cancelled' };
+        return `<span class="badge ${classes[status]||'badge-pending'}">${labels[status]||status}</span>`;
+    }
+
+    function renderOrders() {
+        const orders = ShopDB.getAllOrders();
+        document.getElementById('ordersTotal').textContent = orders.length;
+        document.getElementById('ordersPending').textContent = orders.filter(o => o.status === 'pending').length;
+        document.getElementById('ordersDelivered').textContent = orders.filter(o => o.status === 'delivered').length;
+
+        document.getElementById('ordersTable').innerHTML = orders.map((o,i) => {
+            const items = (o.items || []).map(it => `${it.name} x${it.quantity}`).join(', ');
+            const dateStr = o.createdAt ? new Date(o.createdAt).toLocaleDateString('fr-FR') : '-';
+            return `<tr>
+                <td>${i+1}</td>
+                <td><strong>${o.clientName || '-'}</strong></td>
+                <td>${o.clientPhone || '-'}</td>
+                <td style="max-width:180px;font-size:0.78rem;">${items || '-'}</td>
+                <td><strong>${(o.total || 0).toLocaleString()} DA</strong></td>
+                <td>${dateStr}</td>
+                <td>${getOrderBadge(o.status)}</td>
+                <td><div class="action-btns">
+                    ${o.status==='pending'?`<button class="btn-icon confirm" title="Confirmer" onclick="confirmOrder('${o.id}')"><i class="fas fa-check"></i></button>`:''}
+                    ${o.status==='confirmed'?`<button class="btn-icon edit" title="Expédier" onclick="shipOrder('${o.id}')"><i class="fas fa-truck"></i></button>`:''}
+                    ${o.status==='shipped'?`<button class="btn-icon confirm" title="Livré" onclick="deliverOrder('${o.id}')"><i class="fas fa-flag-checkered"></i></button>`:''}
+                    ${o.status!=='cancelled'&&o.status!=='delivered'?`<button class="btn-icon delete" title="Annuler" onclick="cancelOrder('${o.id}')"><i class="fas fa-ban"></i></button>`:''}
+                    <button class="btn-icon delete" title="Supprimer" onclick="deleteOrder('${o.id}')"><i class="fas fa-trash"></i></button>
+                </div></td>
+            </tr>`;
+        }).join('');
+    }
+
+    document.getElementById('filterOrderStatus').addEventListener('change', (e) => {
+        const status = e.target.value;
+        const orders = ShopDB.getAllOrders();
+        const filtered = status === 'all' ? orders : orders.filter(o => o.status === status);
+        document.getElementById('ordersTable').innerHTML = filtered.map((o,i) => {
+            const items = (o.items || []).map(it => `${it.name} x${it.quantity}`).join(', ');
+            const dateStr = o.createdAt ? new Date(o.createdAt).toLocaleDateString('fr-FR') : '-';
+            return `<tr>
+                <td>${i+1}</td>
+                <td><strong>${o.clientName || '-'}</strong></td>
+                <td>${o.clientPhone || '-'}</td>
+                <td style="max-width:180px;font-size:0.78rem;">${items || '-'}</td>
+                <td><strong>${(o.total || 0).toLocaleString()} DA</strong></td>
+                <td>${dateStr}</td>
+                <td>${getOrderBadge(o.status)}</td>
+                <td><div class="action-btns">
+                    ${o.status==='pending'?`<button class="btn-icon confirm" title="Confirmer" onclick="confirmOrder('${o.id}')"><i class="fas fa-check"></i></button>`:''}
+                    ${o.status==='confirmed'?`<button class="btn-icon edit" title="Expédier" onclick="shipOrder('${o.id}')"><i class="fas fa-truck"></i></button>`:''}
+                    ${o.status==='shipped'?`<button class="btn-icon confirm" title="Livré" onclick="deliverOrder('${o.id}')"><i class="fas fa-flag-checkered"></i></button>`:''}
+                    ${o.status!=='cancelled'&&o.status!=='delivered'?`<button class="btn-icon delete" title="Annuler" onclick="cancelOrder('${o.id}')"><i class="fas fa-ban"></i></button>`:''}
+                    <button class="btn-icon delete" title="Supprimer" onclick="deleteOrder('${o.id}')"><i class="fas fa-trash"></i></button>
+                </div></td>
+            </tr>`;
+        }).join('');
+    });
 
 
     // ================================== //

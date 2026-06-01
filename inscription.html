@@ -194,28 +194,6 @@ a { text-decoration:none; color:inherit; }
         <p class="auth-footer">
             Déjà inscrit ? <a href="connexion.html">Se connecter</a>
         </p>
-
-        <!-- OTP VERIFICATION SECTION (hidden initially) -->
-        <div id="otpSection" style="display:none;">
-            <div class="auth-title">
-                <h1><i class="fas fa-shield-alt"></i> Vérification OTP</h1>
-                <p id="otpMessage">Code envoyé au 07XX...</p>
-            </div>
-            <div class="alert error" id="otpAlertError"></div>
-            <div class="alert success" id="otpAlertSuccess"></div>
-            <div style="display:flex;justify-content:center;gap:12px;margin:30px 0;">
-                <input type="text" maxlength="1" class="otp-input" id="otp1" style="width:55px;height:60px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid var(--gris-border);border-radius:12px;outline:none;transition:var(--transition);">
-                <input type="text" maxlength="1" class="otp-input" id="otp2" style="width:55px;height:60px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid var(--gris-border);border-radius:12px;outline:none;transition:var(--transition);">
-                <input type="text" maxlength="1" class="otp-input" id="otp3" style="width:55px;height:60px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid var(--gris-border);border-radius:12px;outline:none;transition:var(--transition);">
-                <input type="text" maxlength="1" class="otp-input" id="otp4" style="width:55px;height:60px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid var(--gris-border);border-radius:12px;outline:none;transition:var(--transition);">
-            </div>
-            <button type="button" class="btn-submit" id="verifyOtpBtn">
-                <i class="fas fa-check-circle"></i> Vérifier le code
-            </button>
-            <p style="text-align:center;margin-top:15px;font-size:0.85rem;color:#666;">
-                <a href="#" id="resendOtp" style="color:var(--bleu-electrique);font-weight:600;">Renvoyer le code</a>
-            </p>
-        </div>
     </div>
 
     <script src="db-clients.js"></script>
@@ -230,10 +208,6 @@ a { text-decoration:none; color:inherit; }
     const form = document.getElementById('registerForm');
     const alertError = document.getElementById('alertError');
     const alertSuccess = document.getElementById('alertSuccess');
-    const otpSection = document.getElementById('otpSection');
-
-    let pendingData = null;
-    let generatedOTP = '';
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -265,109 +239,21 @@ a { text-decoration:none; color:inherit; }
 
         if (!valid) return;
 
-        // Check if phone/email already exists before OTP
-        const users = ClientsDB.get('users') || [];
-        if (data.email && users.find(u => u.email === data.email)) {
-            showAlert('error', 'Cet email est déjà utilisé.');
-            return;
-        }
-        if (users.find(u => u.phone === data.phone)) {
-            showAlert('error', 'Ce numéro de téléphone est déjà utilisé.');
-            return;
-        }
-
-        // Generate OTP and show verification
-        pendingData = data;
-        generatedOTP = generateOTPCode();
-
-        // Hide form, show OTP section
-        form.style.display = 'none';
-        document.querySelector('.auth-footer').style.display = 'none';
-        otpSection.style.display = 'block';
-
-        const maskedPhone = data.phone.substring(0, 4) + '...' + data.phone.substring(data.phone.length - 2);
-        document.getElementById('otpMessage').innerHTML = `Code envoyé au <strong>${maskedPhone}</strong><br><span style="color:var(--orange);font-weight:700;font-size:1rem;margin-top:8px;display:inline-block;">(Démo: ${generatedOTP})</span>`;
-
-        // Focus first OTP input
-        document.getElementById('otp1').focus();
-    });
-
-    function generateOTPCode() {
-        return Math.floor(1000 + Math.random() * 9000).toString();
-    }
-
-    // OTP input auto-advance
-    document.querySelectorAll('.otp-input').forEach((input, index) => {
-        input.addEventListener('input', (e) => {
-            const val = e.target.value;
-            if (val.length === 1 && index < 3) {
-                document.getElementById('otp' + (index + 2)).focus();
-            }
-            // Style on input
-            input.style.borderColor = val ? 'var(--bleu-electrique)' : 'var(--gris-border)';
-        });
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && !input.value && index > 0) {
-                document.getElementById('otp' + index).focus();
-            }
-        });
-    });
-
-    // Verify OTP
-    document.getElementById('verifyOtpBtn').addEventListener('click', () => {
-        const enteredOTP = document.getElementById('otp1').value +
-                           document.getElementById('otp2').value +
-                           document.getElementById('otp3').value +
-                           document.getElementById('otp4').value;
-
-        const otpError = document.getElementById('otpAlertError');
-        const otpSuccess = document.getElementById('otpAlertSuccess');
-        otpError.classList.remove('active');
-        otpSuccess.classList.remove('active');
-
-        if (enteredOTP.length < 4) {
-            otpError.textContent = 'Veuillez entrer les 4 chiffres du code.';
-            otpError.classList.add('active');
-            return;
-        }
-
-        if (enteredOTP !== generatedOTP) {
-            otpError.textContent = 'Code incorrect. Veuillez réessayer.';
-            otpError.classList.add('active');
-            // Clear inputs
-            document.querySelectorAll('.otp-input').forEach(inp => { inp.value = ''; inp.style.borderColor = 'var(--rouge)'; });
-            document.getElementById('otp1').focus();
-            return;
-        }
-
-        // OTP correct - proceed with registration
-        const result = ClientsDB.register(pendingData);
+        // Direct registration (no OTP)
+        const result = ClientsDB.register(data);
 
         if (result.error) {
-            otpError.textContent = result.error;
-            otpError.classList.add('active');
+            showAlert('error', result.error);
             return;
         }
 
-        otpSuccess.textContent = 'Vérification réussie ! Inscription complète. Redirection...';
-        otpSuccess.classList.add('active');
-        document.getElementById('verifyOtpBtn').disabled = true;
-        document.querySelectorAll('.otp-input').forEach(inp => { inp.style.borderColor = 'var(--vert)'; });
+        // Success
+        showAlert('success', 'Inscription réussie ! Redirection vers votre profil...');
+        document.getElementById('submitBtn').disabled = true;
 
         setTimeout(() => {
             window.location.href = 'profile.html';
         }, 1500);
-    });
-
-    // Resend OTP
-    document.getElementById('resendOtp').addEventListener('click', (e) => {
-        e.preventDefault();
-        generatedOTP = generateOTPCode();
-        const maskedPhone = pendingData.phone.substring(0, 4) + '...' + pendingData.phone.substring(pendingData.phone.length - 2);
-        document.getElementById('otpMessage').innerHTML = `Nouveau code envoyé au <strong>${maskedPhone}</strong><br><span style="color:var(--orange);font-weight:700;font-size:1rem;margin-top:8px;display:inline-block;">(Démo: ${generatedOTP})</span>`;
-        document.querySelectorAll('.otp-input').forEach(inp => { inp.value = ''; inp.style.borderColor = 'var(--gris-border)'; });
-        document.getElementById('otp1').focus();
-        document.getElementById('otpAlertError').classList.remove('active');
     });
 
     function setErr(id) { document.getElementById(id).parentElement.classList.add('error'); }
