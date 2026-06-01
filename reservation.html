@@ -398,11 +398,25 @@ a { text-decoration: none; color: inherit; }
             <i class="fas fa-car-side"></i>
             MONTPLAISIR LAVAGE
         </a>
-        <a href="index.html" class="btn-back">
-            <i class="fas fa-arrow-left"></i>
-            Retour à l'accueil
-        </a>
+        <div style="display:flex;align-items:center;gap:10px;">
+            <a href="profile.html" id="profileLink" style="color:var(--blanc);background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:8px 14px;border-radius:50px;font-size:0.8rem;display:none;align-items:center;gap:6px;transition:all 0.3s ease;">
+                <i class="fas fa-user-circle"></i> <span id="profileLinkName">Profil</span>
+            </a>
+            <a href="index.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Retour à l'accueil
+            </a>
+        </div>
     </header>
+
+    <!-- Auth Banner -->
+    <div id="authBanner" style="width:100%;max-width:800px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:16px 22px;margin-bottom:20px;display:none;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;backdrop-filter:blur(10px);">
+        <p style="color:rgba(255,255,255,0.85);font-size:0.88rem;"><i class="fas fa-info-circle" style="color:var(--orange);margin-right:6px;"></i> Connectez-vous pour pré-remplir vos informations</p>
+        <div style="display:flex;gap:10px;">
+            <a href="connexion.html" style="background:var(--bleu-electrique);color:#fff;padding:8px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;">Connexion</a>
+            <a href="inscription.html" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:8px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;">S'inscrire</a>
+        </div>
+    </div>
 
     <!-- Reservation Card -->
     <div class="reservation-card">
@@ -513,6 +527,7 @@ a { text-decoration: none; color: inherit; }
 
     <!-- Database -->
     <script src="db.js"></script>
+    <script src="db-clients.js"></script>
 
     <!-- Logic -->
     <script>
@@ -525,6 +540,25 @@ a { text-decoration: none; color: inherit; }
     const formSection = document.getElementById('formSection');
     const successSection = document.getElementById('successSection');
     const submitBtn = document.getElementById('submitBtn');
+
+    // Auto-fill si le client est connecté
+    if (ClientsDB.isLoggedIn()) {
+        const user = ClientsDB.getCurrentUser();
+        if (user) {
+            document.getElementById('fullName').value = user.firstName + ' ' + user.lastName;
+            document.getElementById('phone').value = user.phone;
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('carBrand').value = user.car || '';
+            if (user.carType) document.getElementById('carType').value = user.carType;
+
+            // Afficher lien profil, masquer banner
+            document.getElementById('profileLink').style.display = 'flex';
+            document.getElementById('profileLinkName').textContent = user.firstName;
+        }
+    } else {
+        // Afficher la bannière inscription/connexion
+        document.getElementById('authBanner').style.display = 'flex';
+    }
 
     // Charger les services depuis la DB
     const serviceSelect = document.getElementById('service');

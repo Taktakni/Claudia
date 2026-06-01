@@ -1274,10 +1274,12 @@ ul {
                 <a href="#reviews">Avis</a>
                 <a href="#contact">Contact</a>
             </nav>
-            <a href="reservation.html" class="btn-whatsapp-header">
-                <i class="fas fa-calendar-check"></i>
-                Prendre Rendez-vous
-            </a>
+            <div style="display:flex;align-items:center;gap:10px;">
+                <a href="connexion.html" class="btn-whatsapp-header" id="headerAuthBtn" style="background:linear-gradient(135deg,var(--bleu-electrique),#0052cc);">
+                    <i class="fas fa-user"></i>
+                    <span id="headerAuthText">Connexion</span>
+                </a>
+            </div>
             <button class="menu-toggle" id="menuToggle" aria-label="Menu">
                 <i class="fas fa-bars"></i>
             </button>
@@ -1641,6 +1643,8 @@ ul {
                         <li><a href="#hero">Accueil</a></li>
                         <li><a href="#services">Services</a></li>
                         <li><a href="reservation.html">Réservation</a></li>
+                        <li><a href="inscription.html">S'inscrire</a></li>
+                        <li><a href="connexion.html">Mon Compte</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
@@ -1835,6 +1839,25 @@ ul {
         });
     });
 
+    </script>
+
+    <!-- Auth System -->
+    <script src="db-clients.js"></script>
+    <script>
+    // Mettre à jour le bouton header selon l'état de connexion
+    (function() {
+        const authBtn = document.getElementById('headerAuthBtn');
+        const authText = document.getElementById('headerAuthText');
+        const icon = authBtn.querySelector('i');
+
+        if (ClientsDB.isLoggedIn()) {
+            const session = ClientsDB.getSession();
+            authBtn.href = 'profile.html';
+            authText.textContent = session.firstName;
+            icon.classList.replace('fa-user', 'fa-user-circle');
+            authBtn.style.background = 'linear-gradient(135deg, var(--orange), #e07800)';
+        }
+    })();
     </script>
 </body>
 </html>
