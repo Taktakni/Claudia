@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin | MONTPLAISIR LAVAGE AUTO</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+
+/* ================================== */
+/* VARIABLES & RESET                  */
+/* ================================== */
+:root {
+    --bleu-fonce: #071B3B;
+    --bleu-electrique: #0066FF;
+    --orange: #FF8C00;
+    --blanc: #FFFFFF;
+    --gris-clair: #f0f2f5;
+    --gris-border: #e1e5eb;
+    --vert: #25D366;
+    --rouge: #ff4757;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 8px 30px rgba(0, 102, 255, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --sidebar-width: 260px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--gris-clair);
+    color: var(--bleu-fonce);
+    min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { cursor: pointer; font-family: inherit; }
+input, select, textarea { font-family: inherit; }
+
+/* ================================== */
+/* LOGIN PAGE                         */
+/* ================================== */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--bleu-fonce) 0%, #0a2a5e 100%);
+    padding: 20px;
+}
+
+.login-card {
+    background: var(--blanc);
+    border-radius: 24px;
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.login-card .login-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--bleu-fonce);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.login-card .login-logo i {
+    color: var(--orange);
+    font-size: 1.8rem;
+}
+
+.login-card h2 {
+    font-size: 1.3rem;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.login-form .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.login-form label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--bleu-fonce);
+    margin-bottom: 8px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid var(--gris-border);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    outline: none;
+}
+
+.login-form input:focus {
+    border-color: var(--bleu-electrique);
+    box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--bleu-electrique), #0052cc);
+    color: var(--blanc);
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: var(--transition);
+    margin-top: 10px;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+}
+
+.login-error {
+    color: var(--rouge);
+    font-size: 0.85rem;
+    margin-top: 15px;
+    display: none;
+}
+
+
+/* ================================== */
+/* SIDEBAR                            */
+/* ================================== */
+.admin-layout {
+    display: none;
+    min-height: 100vh;
+}
+
+.admin-layout.active {
+    display: flex;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--bleu-fonce);
+    min-height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    padding: 30px 0;
+    transition: var(--transition);
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    color: var(--blanc);
+    font-size: 1.2rem;
+    font-weight: 800;
+    padding: 0 25px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-logo i {
+    color: var(--orange);
+    font-size: 1.4rem;
+}
+
+.sidebar-menu {
+    padding: 0 15px;
+}
+
+.sidebar-menu li {
+    margin-bottom: 5px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+    background: rgba(0, 102, 255, 0.2);
+    color: var(--blanc);
+}
+
+.sidebar-menu a.active {
+    background: var(--bleu-electrique);
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+}
+
+.sidebar-menu a i {
+    width: 20px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 20px 15px;
+}
+
+.sidebar-menu .logout-link {
+    color: var(--rouge);
+}
+
+.sidebar-menu .logout-link:hover {
+    background: rgba(255, 71, 87, 0.15);
+    color: var(--rouge);
+}
+
+/* ================================== */
+/* MAIN CONTENT                       */
+/* ================================== */
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 30px;
+    min-height: 100vh;
+}
+
+/* Top Bar */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.top-bar h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--bleu-fonce);
+}
+
+.top-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-add {
+    background: linear-gradient(135deg, var(--bleu-electrique), #0052cc);
+    color: var(--blanc);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: var(--bleu-fonce);
+    color: var(--blanc);
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+
+/* ================================== */
+/* DASHBOARD CARDS                    */
+/* ================================== */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--blanc);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 4px 0 0 4px;
+}
+
+.stat-card.blue::before { background: var(--bleu-electrique); }
+.stat-card.orange::before { background: var(--orange); }
+.stat-card.green::before { background: var(--vert); }
+.stat-card.red::before { background: var(--rouge); }
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.stat-card .stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.stat-card .stat-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.stat-card.blue .stat-icon { background: rgba(0, 102, 255, 0.1); color: var(--bleu-electrique); }
+.stat-card.orange .stat-icon { background: rgba(255, 140, 0, 0.1); color: var(--orange); }
+.stat-card.green .stat-icon { background: rgba(37, 211, 102, 0.1); color: var(--vert); }
+.stat-card.red .stat-icon { background: rgba(255, 71, 87, 0.1); color: var(--rouge); }
+
+.stat-card .stat-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--bleu-fonce);
+}
+
+.stat-card .stat-label {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+}
+
+/* ================================== */
+/* DATA TABLE                         */
+/* ================================== */
+.table-container {
+    background: var(--blanc);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--gris-border);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.table-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.table-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.table-search input {
+    padding: 9px 15px;
+    border: 1px solid var(--gris-border);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    width: 220px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.table-search input:focus {
+    border-color: var(--bleu-electrique);
+}
+
+.table-filter select {
+    padding: 9px 15px;
+    border: 1px solid var(--gris-border);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    outline: none;
+    background: var(--blanc);
+    cursor: pointer;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead {
+    background: var(--gris-clair);
+}
+
+.data-table th {
+    padding: 14px 20px;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.data-table td {
+    padding: 14px 20px;
+    font-size: 0.88rem;
+    border-bottom: 1px solid var(--gris-border);
+    color: #444;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover {
+    background: rgba(0, 102, 255, 0.02);
+}
+
+/* Status Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-pending {
+    background: rgba(255, 140, 0, 0.1);
+    color: var(--orange);
+}
+
+.badge-confirmed {
+    background: rgba(0, 102, 255, 0.1);
+    color: var(--bleu-electrique);
+}
+
+.badge-completed {
+    background: rgba(37, 211, 102, 0.1);
+    color: var(--vert);
+}
+
+.badge-cancelled {
+    background: rgba(255, 71, 87, 0.1);
+    color: var(--rouge);
+}
+
+/* Action Buttons */
+.action-btns {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: var(--transition);
+}
+
+.btn-icon.view { background: rgba(0, 102, 255, 0.1); color: var(--bleu-electrique); }
+.btn-icon.edit { background: rgba(255, 140, 0, 0.1); color: var(--orange); }
+.btn-icon.delete { background: rgba(255, 71, 87, 0.1); color: var(--rouge); }
+.btn-icon.whatsapp { background: rgba(37, 211, 102, 0.1); color: var(--vert); }
+
+.btn-icon:hover { transform: scale(1.15); }
+
+
+/* ================================== */
+/* MODAL                              */
+/* ================================== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: var(--blanc);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 35px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.modal-header h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.modal-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--gris-clair);
+    font-size: 1.1rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.modal-close:hover {
+    background: var(--rouge);
+    color: var(--blanc);
+}
+
+.modal-form .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.modal-form .form-group {
+    margin-bottom: 15px;
+}
+
+.modal-form label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--bleu-fonce);
+    margin-bottom: 6px;
+}
+
+.modal-form input,
+.modal-form select,
+.modal-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid var(--gris-border);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+.modal-form input:focus,
+.modal-form select:focus,
+.modal-form textarea:focus {
+    border-color: var(--bleu-electrique);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.08);
+}
+
+.modal-form textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
+
+.btn-modal-cancel {
+    padding: 11px 22px;
+    border: 1.5px solid var(--gris-border);
+    border-radius: 10px;
+    background: var(--blanc);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #666;
+    transition: var(--transition);
+}
+
+.btn-modal-cancel:hover { background: var(--gris-clair); }
+
+.btn-modal-save {
+    padding: 11px 22px;
+    background: linear-gradient(135deg, var(--bleu-electrique), #0052cc);
+    color: var(--blanc);
+    border: none;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-modal-save:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* ================================== */
+/* PAGES                              */
+/* ================================== */
+.page-section {
+    display: none;
+}
+
+.page-section.active {
+    display: block;
+}
+
+/* ================================== */
+/* CHARTS PLACEHOLDER                 */
+/* ================================== */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chart-card {
+    background: var(--blanc);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+}
+
+.chart-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--bleu-fonce);
+}
+
+.chart-placeholder {
+    height: 200px;
+    background: linear-gradient(135deg, rgba(0, 102, 255, 0.05), rgba(255, 140, 0, 0.05));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* Bar Chart CSS */
+.bar-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 200px;
+    padding: 20px 10px 0;
+}
+
+.bar-chart .bar {
+    width: 30px;
+    background: linear-gradient(to top, var(--bleu-electrique), rgba(0, 102, 255, 0.5));
+    border-radius: 6px 6px 0 0;
+    position: relative;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.bar-chart .bar:hover {
+    background: linear-gradient(to top, var(--orange), rgba(255, 140, 0, 0.5));
+}
+
+.bar-chart .bar-label {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    color: #888;
+    white-space: nowrap;
+}
+
+.bar-chart .bar-value {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--bleu-fonce);
+}
+
+/* Recent Activity */
+.activity-list {
+    padding: 0;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gris-border);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.activity-icon.new { background: rgba(0, 102, 255, 0.1); color: var(--bleu-electrique); }
+.activity-icon.done { background: rgba(37, 211, 102, 0.1); color: var(--vert); }
+.activity-icon.cancel { background: rgba(255, 71, 87, 0.1); color: var(--rouge); }
+
+.activity-info p {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--bleu-fonce);
+}
+
+.activity-info span {
+    font-size: 0.75rem;
+    color: #999;
+}
+
+/* ================================== */
+/* RESPONSIVE                         */
+/* ================================== */
+@media (max-width: 992px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .data-table {
+        font-size: 0.8rem;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 10px 12px;
+    }
+
+    .table-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .modal {
+        padding: 25px 20px;
+    }
+}
+    </style>
+</head>
+<body>
+
+
+    <!-- ================================== -->
+    <!-- LOGIN PAGE                         -->
+    <!-- ================================== -->
+    <div class="login-page" id="loginPage">
+        <div class="login-card">
+            <div class="login-logo">
+                <i class="fas fa-car-side"></i>
+                MONTPLAISIR
+            </div>
+            <h2>Panneau d'Administration</h2>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginUser">Nom d'utilisateur</label>
+                    <input type="text" id="loginUser" placeholder="admin" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPass">Mot de passe</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Se Connecter
+                </button>
+                <p class="login-error" id="loginError">Identifiants incorrects. Réessayez.</p>
+            </form>
+            <p style="margin-top:20px; font-size:0.8rem; color:#999;">
+                Par défaut : admin / admin123
+            </p>
+        </div>
+    </div>
+
+    <!-- ================================== -->
+    <!-- ADMIN LAYOUT                       -->
+    <!-- ================================== -->
+    <div class="admin-layout" id="adminLayout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <i class="fas fa-car-side"></i>
+                MONTPLAISIR
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" data-page="dashboard"><i class="fas fa-th-large"></i> Tableau de bord</a></li>
+                <li><a href="#" data-page="appointments"><i class="fas fa-calendar-alt"></i> Rendez-vous</a></li>
+                <li><a href="#" data-page="clients"><i class="fas fa-users"></i> Clients</a></li>
+                <li><a href="#" data-page="services"><i class="fas fa-car-wash"></i> Services</a></li>
+                <li><a href="#" data-page="stats"><i class="fas fa-chart-bar"></i> Statistiques</a></li>
+            </ul>
+            <div class="sidebar-divider"></div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-page="settings"><i class="fas fa-cog"></i> Paramètres</a></li>
+                <li><a href="index.html"><i class="fas fa-globe"></i> Voir le site</a></li>
+                <li><a href="#" class="logout-link" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+            </ul>
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div style="display:flex;align-items:center;gap:15px;">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+                    <h1 id="pageTitle">Tableau de bord</h1>
+                </div>
+                <div class="top-bar-actions">
+                    <span style="font-size:0.85rem;color:#888;">
+                        <i class="fas fa-user-circle"></i> Admin
+                    </span>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- PAGE: DASHBOARD                -->
+            <!-- ============================== -->
+            <div class="page-section active" id="page-dashboard">
+
+                <!-- Stats Cards -->
+                <div class="stats-cards">
+                    <div class="stat-card blue">
+                        <div class="stat-header">
+                            <div>
+                                <span class="stat-value" id="totalRdv">0</span>
+                                <span class="stat-label">Rendez-vous total</span>
+                            </div>
+                            <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-header">
+                            <div>
+                                <span class="stat-value" id="pendingRdv">0</span>
+                                <span class="stat-label">En attente</span>
+                            </div>
+                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-header">
+                            <div>
+                                <span class="stat-value" id="completedRdv">0</span>
+                                <span class="stat-label">Terminés</span>
+                            </div>
+                            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card red">
+                        <div class="stat-header">
+                            <div>
+                                <span class="stat-value" id="totalClients">0</span>
+                                <span class="stat-label">Clients</span>
+                            </div>
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h4><i class="fas fa-chart-bar"></i> Rendez-vous par jour</h4>
+                        <div class="bar-chart" id="weeklyChart"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h4><i class="fas fa-history"></i> Activité récente</h4>
+                        <ul class="activity-list" id="activityList"></ul>
+                    </div>
+                </div>
+
+                <!-- Recent Appointments Table -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Derniers rendez-vous</h3>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Client</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Heure</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ============================== -->
+            <!-- PAGE: RENDEZ-VOUS              -->
+            <!-- ============================== -->
+            <div class="page-section" id="page-appointments">
+                <div class="stats-cards">
+                    <div class="stat-card blue">
+                        <div class="stat-header">
+                            <div>
+                                <span class="stat-value" id="apptTotal">0</span>
+                                <span class="stat-label">Total RDV</span>
+                            </div>
+                            <div class="stat-icon"><i class="fas fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-header">
+                            <div>
+                                <span class="stat-value" id="apptToday">0</span>
+                                <span class="stat-label">Aujourd'hui</span>
+                            </div>
+                            <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-header">
+                            <div>
+                                <span class="stat-value" id="apptConfirmed">0</span>
+                                <span class="stat-label">Confirmés</span>
+                            </div>
+                            <div class="stat-icon"><i class="fas fa-check"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Liste des rendez-vous</h3>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <div class="table-search">
+                                <input type="text" id="searchAppt" placeholder="Rechercher...">
+                            </div>
+                            <div class="table-filter">
+                                <select id="filterApptStatus">
+                                    <option value="all">Tous les statuts</option>
+                                    <option value="pending">En attente</option>
+                                    <option value="confirmed">Confirmé</option>
+                                    <option value="completed">Terminé</option>
+                                    <option value="cancelled">Annulé</option>
+                                </select>
+                            </div>
+                            <button class="btn-add" onclick="openModal('appointment')">
+                                <i class="fas fa-plus"></i> Nouveau RDV
+                            </button>
+                        </div>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Client</th>
+                                    <th>Téléphone</th>
+                                    <th>Véhicule</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Heure</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- PAGE: CLIENTS                  -->
+            <!-- ============================== -->
+            <div class="page-section" id="page-clients">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Liste des clients</h3>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <div class="table-search">
+                                <input type="text" id="searchClient" placeholder="Rechercher un client...">
+                            </div>
+                            <button class="btn-add" onclick="openModal('client')">
+                                <i class="fas fa-plus"></i> Nouveau Client
+                            </button>
+                        </div>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nom</th>
+                                    <th>Téléphone</th>
+                                    <th>Email</th>
+                                    <th>Véhicule</th>
+                                    <th>Visites</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ============================== -->
+            <!-- PAGE: SERVICES                 -->
+            <!-- ============================== -->
+            <div class="page-section" id="page-services">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Liste des services</h3>
+                        <button class="btn-add" onclick="openModal('service')">
+                            <i class="fas fa-plus"></i> Nouveau Service
+                        </button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Service</th>
+                                    <th>Prix</th>
+                                    <th>Durée</th>
+                                    <th>Catégorie</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="servicesTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- PAGE: STATISTIQUES             -->
+            <!-- ============================== -->
+            <div class="page-section" id="page-stats">
+                <div class="stats-cards">
+                    <div class="stat-card blue">
+                        <div class="stat-header">
+                            <div>
+                                <span class="stat-value" id="statsRevenue">0 DA</span>
+                                <span class="stat-label">Revenu estimé (mois)</span>
+                            </div>
+                            <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-header">
+                            <div>
+                                <span class="stat-value" id="statsAvg">0</span>
+                                <span class="stat-label">RDV / jour (moy.)</span>
+                            </div>
+                            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-header">
+                            <div>
+                                <span class="stat-value" id="statsPopular">-</span>
+                                <span class="stat-label">Service populaire</span>
+                            </div>
+                            <div class="stat-icon"><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h4><i class="fas fa-chart-pie"></i> Répartition par service</h4>
+                        <div class="bar-chart" id="serviceChart"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h4><i class="fas fa-chart-area"></i> Évolution mensuelle</h4>
+                        <div class="bar-chart" id="monthlyChart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- PAGE: PARAMÈTRES               -->
+            <!-- ============================== -->
+            <div class="page-section" id="page-settings">
+                <div class="table-container" style="padding:30px;">
+                    <h3 style="margin-bottom:20px;">Paramètres du compte</h3>
+                    <form id="settingsForm">
+                        <div class="modal-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Nom d'utilisateur</label>
+                                    <input type="text" id="settingsUser" value="admin">
+                                </div>
+                                <div class="form-group">
+                                    <label>Nouveau mot de passe</label>
+                                    <input type="password" id="settingsPass" placeholder="Laisser vide pour ne pas changer">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Nom du commerce</label>
+                                    <input type="text" id="settingsShop" value="Montplaisir Lavage Auto">
+                                </div>
+                                <div class="form-group">
+                                    <label>WhatsApp</label>
+                                    <input type="text" id="settingsWhatsapp" value="+213 771 12 94 69">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Horaires d'ouverture</label>
+                                    <input type="text" id="settingsHours" value="08h00 - 20h00">
+                                </div>
+                                <div class="form-group">
+                                    <label>Adresse</label>
+                                    <input type="text" id="settingsAddress" value="Sidi Bel Abbès – Montplaisir">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-modal-save" style="margin-top:20px;">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+
+    <!-- ================================== -->
+    <!-- MODALS                             -->
+    <!-- ================================== -->
+
+    <!-- Modal: Nouveau RDV -->
+    <div class="modal-overlay" id="modalAppointment">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-plus"></i> Nouveau Rendez-vous</h3>
+                <button class="modal-close" onclick="closeModal('appointment')">&times;</button>
+            </div>
+            <form class="modal-form" id="formAppointment">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nom du client *</label>
+                        <input type="text" id="apptName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone *</label>
+                        <input type="tel" id="apptPhone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="apptEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>Véhicule *</label>
+                        <input type="text" id="apptCar" placeholder="Marque + Type" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Service *</label>
+                        <select id="apptService" required>
+                            <option value="">-- Sélectionner --</option>
+                            <option value="Lavage Extérieur">Lavage Extérieur</option>
+                            <option value="Lavage Intérieur">Lavage Intérieur</option>
+                            <option value="Lavage Complet">Lavage Complet</option>
+                            <option value="Lavage Premium">Lavage Premium</option>
+                            <option value="Polissage">Polissage</option>
+                            <option value="Nettoyage Moteur">Nettoyage Moteur</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Statut</label>
+                        <select id="apptStatus">
+                            <option value="pending">En attente</option>
+                            <option value="confirmed">Confirmé</option>
+                            <option value="completed">Terminé</option>
+                            <option value="cancelled">Annulé</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="date" id="apptDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Heure *</label>
+                        <input type="time" id="apptTime" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="apptNotes" placeholder="Notes internes..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal-cancel" onclick="closeModal('appointment')">Annuler</button>
+                    <button type="submit" class="btn-modal-save">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Nouveau Client -->
+    <div class="modal-overlay" id="modalClient">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Nouveau Client</h3>
+                <button class="modal-close" onclick="closeModal('client')">&times;</button>
+            </div>
+            <form class="modal-form" id="formClient">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nom complet *</label>
+                        <input type="text" id="clientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone *</label>
+                        <input type="tel" id="clientPhone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="clientEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>Véhicule</label>
+                        <input type="text" id="clientCar" placeholder="Marque + Type">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="clientNotes" placeholder="Notes sur le client..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal-cancel" onclick="closeModal('client')">Annuler</button>
+                    <button type="submit" class="btn-modal-save">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Nouveau Service -->
+    <div class="modal-overlay" id="modalService">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> Nouveau Service</h3>
+                <button class="modal-close" onclick="closeModal('service')">&times;</button>
+            </div>
+            <form class="modal-form" id="formService">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nom du service *</label>
+                        <input type="text" id="serviceName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Prix (DA) *</label>
+                        <input type="number" id="servicePrice" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Durée (min)</label>
+                        <input type="number" id="serviceDuration" placeholder="30">
+                    </div>
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <select id="serviceCategory">
+                            <option value="Lavage">Lavage</option>
+                            <option value="Nettoyage">Nettoyage</option>
+                            <option value="Polissage">Polissage</option>
+                            <option value="Premium">Premium</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal-cancel" onclick="closeModal('service')">Annuler</button>
+                    <button type="submit" class="btn-modal-save">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ================================== -->
+    <!-- JAVASCRIPT                         -->
+    <!-- ================================== -->
+    <script>
+    'use strict';
+
+    // ================================== //
+    // DATABASE (LocalStorage)            //
+    // ================================== //
+    const DB = {
+        get(key) {
+            const data = localStorage.getItem('montplaisir_' + key);
+            return data ? JSON.parse(data) : null;
+        },
+        set(key, value) {
+            localStorage.setItem('montplaisir_' + key, JSON.stringify(value));
+        },
+        init() {
+            if (!this.get('appointments')) {
+                this.set('appointments', [
+                    { id: 1, name: 'Ahmed Benali', phone: '0771234567', email: 'ahmed@email.com', car: 'Toyota Corolla (Berline)', service: 'Lavage Complet', date: '2026-06-02', time: '09:00', status: 'confirmed', notes: '' },
+                    { id: 2, name: 'Karim Mansouri', phone: '0552345678', email: '', car: 'Peugeot 308 (Berline)', service: 'Lavage Premium', date: '2026-06-02', time: '10:30', status: 'pending', notes: '' },
+                    { id: 3, name: 'Youcef Larbi', phone: '0663456789', email: 'youcef@email.com', car: 'Hyundai Tucson (SUV)', service: 'Polissage', date: '2026-06-01', time: '14:00', status: 'completed', notes: 'Client fidèle' },
+                    { id: 4, name: 'Mohamed Said', phone: '0774567890', email: '', car: 'Dacia Duster (4x4)', service: 'Lavage Extérieur', date: '2026-06-01', time: '16:00', status: 'completed', notes: '' },
+                    { id: 5, name: 'Rachid Djelloul', phone: '0555678901', email: 'rachid@email.com', car: 'VW Golf (Citadine)', service: 'Lavage Intérieur', date: '2026-06-03', time: '08:30', status: 'pending', notes: '' },
+                    { id: 6, name: 'Omar Bouchnak', phone: '0666789012', email: '', car: 'Renault Clio (Citadine)', service: 'Nettoyage Moteur', date: '2026-05-30', time: '11:00', status: 'cancelled', notes: 'Annulé par le client' },
+                ]);
+            }
+            if (!this.get('clients')) {
+                this.set('clients', [
+                    { id: 1, name: 'Ahmed Benali', phone: '0771234567', email: 'ahmed@email.com', car: 'Toyota Corolla', visits: 5 },
+                    { id: 2, name: 'Karim Mansouri', phone: '0552345678', email: '', car: 'Peugeot 308', visits: 2 },
+                    { id: 3, name: 'Youcef Larbi', phone: '0663456789', email: 'youcef@email.com', car: 'Hyundai Tucson', visits: 8 },
+                    { id: 4, name: 'Mohamed Said', phone: '0774567890', email: '', car: 'Dacia Duster', visits: 3 },
+                    { id: 5, name: 'Rachid Djelloul', phone: '0555678901', email: 'rachid@email.com', car: 'VW Golf', visits: 1 },
+                    { id: 6, name: 'Omar Bouchnak', phone: '0666789012', email: '', car: 'Renault Clio', visits: 4 },
+                ]);
+            }
+            if (!this.get('services')) {
+                this.set('services', [
+                    { id: 1, name: 'Lavage Extérieur', price: 500, duration: 20, category: 'Lavage' },
+                    { id: 2, name: 'Lavage Intérieur', price: 600, duration: 30, category: 'Nettoyage' },
+                    { id: 3, name: 'Lavage Complet', price: 1000, duration: 45, category: 'Lavage' },
+                    { id: 4, name: 'Lavage Premium', price: 1500, duration: 60, category: 'Premium' },
+                    { id: 5, name: 'Polissage', price: 2000, duration: 90, category: 'Polissage' },
+                    { id: 6, name: 'Nettoyage Moteur', price: 800, duration: 40, category: 'Nettoyage' },
+                ]);
+            }
+            if (!this.get('credentials')) {
+                this.set('credentials', { username: 'admin', password: 'admin123' });
+            }
+        }
+    };
+
+    DB.init();
+
+
+    // ================================== //
+    // LOGIN SYSTEM                       //
+    // ================================== //
+    const loginPage = document.getElementById('loginPage');
+    const adminLayout = document.getElementById('adminLayout');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+
+    // Vérifier si déjà connecté
+    if (sessionStorage.getItem('montplaisir_logged') === 'true') {
+        showAdmin();
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const user = document.getElementById('loginUser').value.trim();
+        const pass = document.getElementById('loginPass').value;
+        const creds = DB.get('credentials');
+
+        if (user === creds.username && pass === creds.password) {
+            sessionStorage.setItem('montplaisir_logged', 'true');
+            showAdmin();
+        } else {
+            loginError.style.display = 'block';
+            setTimeout(() => { loginError.style.display = 'none'; }, 3000);
+        }
+    });
+
+    function showAdmin() {
+        loginPage.style.display = 'none';
+        adminLayout.classList.add('active');
+        refreshAll();
+    }
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        sessionStorage.removeItem('montplaisir_logged');
+        location.reload();
+    });
+
+    // ================================== //
+    // NAVIGATION                         //
+    // ================================== //
+    const sidebarLinks = document.querySelectorAll('.sidebar-menu a[data-page]');
+    const pageTitle = document.getElementById('pageTitle');
+    const pageTitles = {
+        dashboard: 'Tableau de bord',
+        appointments: 'Rendez-vous',
+        clients: 'Clients',
+        services: 'Services',
+        stats: 'Statistiques',
+        settings: 'Paramètres'
+    };
+
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const page = link.dataset.page;
+            // Active state
+            sidebarLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            // Show page
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            pageTitle.textContent = pageTitles[page] || 'Admin';
+            // Close mobile sidebar
+            document.getElementById('sidebar').classList.remove('active');
+            // Refresh data
+            refreshAll();
+        });
+    });
+
+    // Mobile menu
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('active');
+    });
+
+    // ================================== //
+    // MODALS                             //
+    // ================================== //
+    function openModal(type) {
+        document.getElementById('modal' + capitalize(type)).classList.add('active');
+    }
+
+    function closeModal(type) {
+        document.getElementById('modal' + capitalize(type)).classList.remove('active');
+    }
+
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // Close modal on outside click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    });
+
+
+    // ================================== //
+    // CRUD: APPOINTMENTS                 //
+    // ================================== //
+    document.getElementById('formAppointment').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const appointments = DB.get('appointments');
+        const newAppt = {
+            id: Date.now(),
+            name: document.getElementById('apptName').value.trim(),
+            phone: document.getElementById('apptPhone').value.trim(),
+            email: document.getElementById('apptEmail').value.trim(),
+            car: document.getElementById('apptCar').value.trim(),
+            service: document.getElementById('apptService').value,
+            date: document.getElementById('apptDate').value,
+            time: document.getElementById('apptTime').value,
+            status: document.getElementById('apptStatus').value,
+            notes: document.getElementById('apptNotes').value.trim()
+        };
+        appointments.unshift(newAppt);
+        DB.set('appointments', appointments);
+
+        // Auto-add client if new
+        addClientIfNew(newAppt.name, newAppt.phone, newAppt.email, newAppt.car);
+
+        closeModal('appointment');
+        e.target.reset();
+        refreshAll();
+    });
+
+    function addClientIfNew(name, phone, email, car) {
+        const clients = DB.get('clients');
+        const existing = clients.find(c => c.phone === phone);
+        if (existing) {
+            existing.visits += 1;
+        } else {
+            clients.push({
+                id: Date.now(),
+                name, phone, email, car,
+                visits: 1
+            });
+        }
+        DB.set('clients', clients);
+    }
+
+    function deleteAppointment(id) {
+        if (!confirm('Supprimer ce rendez-vous ?')) return;
+        let appointments = DB.get('appointments');
+        appointments = appointments.filter(a => a.id !== id);
+        DB.set('appointments', appointments);
+        refreshAll();
+    }
+
+    function changeStatus(id, newStatus) {
+        const appointments = DB.get('appointments');
+        const appt = appointments.find(a => a.id === id);
+        if (appt) {
+            appt.status = newStatus;
+            DB.set('appointments', appointments);
+            refreshAll();
+        }
+    }
+
+    function sendWhatsApp(phone, name, service, date, time) {
+        const msg = `Bonjour ${name}, votre rendez-vous pour "${service}" le ${date} à ${time} est confirmé. Merci ! - Montplaisir Lavage`;
+        const url = `https://wa.me/213${phone.substring(1)}?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+    }
+
+    // ================================== //
+    // CRUD: CLIENTS                      //
+    // ================================== //
+    document.getElementById('formClient').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const clients = DB.get('clients');
+        clients.push({
+            id: Date.now(),
+            name: document.getElementById('clientName').value.trim(),
+            phone: document.getElementById('clientPhone').value.trim(),
+            email: document.getElementById('clientEmail').value.trim(),
+            car: document.getElementById('clientCar').value.trim(),
+            visits: 0
+        });
+        DB.set('clients', clients);
+        closeModal('client');
+        e.target.reset();
+        refreshAll();
+    });
+
+    function deleteClient(id) {
+        if (!confirm('Supprimer ce client ?')) return;
+        let clients = DB.get('clients');
+        clients = clients.filter(c => c.id !== id);
+        DB.set('clients', clients);
+        refreshAll();
+    }
+
+    // ================================== //
+    // CRUD: SERVICES                     //
+    // ================================== //
+    document.getElementById('formService').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const services = DB.get('services');
+        services.push({
+            id: Date.now(),
+            name: document.getElementById('serviceName').value.trim(),
+            price: parseInt(document.getElementById('servicePrice').value),
+            duration: parseInt(document.getElementById('serviceDuration').value) || 30,
+            category: document.getElementById('serviceCategory').value
+        });
+        DB.set('services', services);
+        closeModal('service');
+        e.target.reset();
+        refreshAll();
+    });
+
+    function deleteService(id) {
+        if (!confirm('Supprimer ce service ?')) return;
+        let services = DB.get('services');
+        services = services.filter(s => s.id !== id);
+        DB.set('services', services);
+        refreshAll();
+    }
+
+
+    // ================================== //
+    // RENDER FUNCTIONS                   //
+    // ================================== //
+    function refreshAll() {
+        renderDashboard();
+        renderAppointments();
+        renderClients();
+        renderServices();
+        renderStats();
+    }
+
+    function getStatusBadge(status) {
+        const labels = { pending: 'En attente', confirmed: 'Confirmé', completed: 'Terminé', cancelled: 'Annulé' };
+        return `<span class="badge badge-${status}">${labels[status] || status}</span>`;
+    }
+
+    function renderDashboard() {
+        const appointments = DB.get('appointments');
+        const clients = DB.get('clients');
+
+        // Stats
+        document.getElementById('totalRdv').textContent = appointments.length;
+        document.getElementById('pendingRdv').textContent = appointments.filter(a => a.status === 'pending').length;
+        document.getElementById('completedRdv').textContent = appointments.filter(a => a.status === 'completed').length;
+        document.getElementById('totalClients').textContent = clients.length;
+
+        // Dashboard table (last 5)
+        const tbody = document.getElementById('dashboardTable');
+        const recent = appointments.slice(0, 5);
+        tbody.innerHTML = recent.map(a => `
+            <tr>
+                <td><strong>${a.name}</strong></td>
+                <td>${a.service}</td>
+                <td>${a.date}</td>
+                <td>${a.time}</td>
+                <td>${getStatusBadge(a.status)}</td>
+                <td>
+                    <div class="action-btns">
+                        <button class="btn-icon whatsapp" title="WhatsApp" onclick="sendWhatsApp('${a.phone}','${a.name}','${a.service}','${a.date}','${a.time}')"><i class="fab fa-whatsapp"></i></button>
+                        ${a.status === 'pending' ? `<button class="btn-icon view" title="Confirmer" onclick="changeStatus(${a.id},'confirmed')"><i class="fas fa-check"></i></button>` : ''}
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+
+        // Weekly chart
+        renderWeeklyChart();
+
+        // Activity
+        renderActivity(appointments);
+    }
+
+    function renderWeeklyChart() {
+        const appointments = DB.get('appointments');
+        const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+        const counts = new Array(7).fill(0);
+
+        appointments.forEach(a => {
+            const day = new Date(a.date).getDay();
+            if (!isNaN(day)) counts[day]++;
+        });
+
+        const maxVal = Math.max(...counts, 1);
+        const chart = document.getElementById('weeklyChart');
+        chart.innerHTML = counts.map((val, i) => `
+            <div class="bar" style="height: ${(val / maxVal) * 160}px;">
+                <span class="bar-value">${val}</span>
+                <span class="bar-label">${days[i]}</span>
+            </div>
+        `).join('');
+    }
+
+    function renderActivity(appointments) {
+        const list = document.getElementById('activityList');
+        const recent = appointments.slice(0, 5);
+        list.innerHTML = recent.map(a => {
+            const iconClass = a.status === 'completed' ? 'done' : a.status === 'cancelled' ? 'cancel' : 'new';
+            const icon = a.status === 'completed' ? 'fa-check' : a.status === 'cancelled' ? 'fa-times' : 'fa-plus';
+            return `
+                <li class="activity-item">
+                    <div class="activity-icon ${iconClass}"><i class="fas ${icon}"></i></div>
+                    <div class="activity-info">
+                        <p>${a.name} - ${a.service}</p>
+                        <span>${a.date} à ${a.time}</span>
+                    </div>
+                </li>
+            `;
+        }).join('');
+    }
+
+    function renderAppointments() {
+        const appointments = DB.get('appointments');
+        const today = new Date().toISOString().split('T')[0];
+
+        document.getElementById('apptTotal').textContent = appointments.length;
+        document.getElementById('apptToday').textContent = appointments.filter(a => a.date === today).length;
+        document.getElementById('apptConfirmed').textContent = appointments.filter(a => a.status === 'confirmed').length;
+
+        const tbody = document.getElementById('appointmentsTable');
+        tbody.innerHTML = appointments.map((a, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td><strong>${a.name}</strong></td>
+                <td>${a.phone}</td>
+                <td>${a.car}</td>
+                <td>${a.service}</td>
+                <td>${a.date}</td>
+                <td>${a.time}</td>
+                <td>${getStatusBadge(a.status)}</td>
+                <td>
+                    <div class="action-btns">
+                        <button class="btn-icon whatsapp" title="WhatsApp" onclick="sendWhatsApp('${a.phone}','${a.name}','${a.service}','${a.date}','${a.time}')"><i class="fab fa-whatsapp"></i></button>
+                        ${a.status === 'pending' ? `<button class="btn-icon view" title="Confirmer" onclick="changeStatus(${a.id},'confirmed')"><i class="fas fa-check"></i></button>` : ''}
+                        ${a.status === 'confirmed' ? `<button class="btn-icon edit" title="Terminer" onclick="changeStatus(${a.id},'completed')"><i class="fas fa-flag-checkered"></i></button>` : ''}
+                        <button class="btn-icon delete" title="Supprimer" onclick="deleteAppointment(${a.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function renderClients() {
+        const clients = DB.get('clients');
+        const tbody = document.getElementById('clientsTable');
+        tbody.innerHTML = clients.map((c, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td><strong>${c.name}</strong></td>
+                <td>${c.phone}</td>
+                <td>${c.email || '-'}</td>
+                <td>${c.car || '-'}</td>
+                <td><span class="badge badge-confirmed">${c.visits}</span></td>
+                <td>
+                    <div class="action-btns">
+                        <button class="btn-icon whatsapp" title="WhatsApp" onclick="window.open('https://wa.me/213${c.phone.substring(1)}','_blank')"><i class="fab fa-whatsapp"></i></button>
+                        <button class="btn-icon delete" title="Supprimer" onclick="deleteClient(${c.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function renderServices() {
+        const services = DB.get('services');
+        const tbody = document.getElementById('servicesTable');
+        tbody.innerHTML = services.map((s, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td><strong>${s.name}</strong></td>
+                <td>${s.price} DA</td>
+                <td>${s.duration} min</td>
+                <td><span class="badge badge-confirmed">${s.category}</span></td>
+                <td>
+                    <div class="action-btns">
+                        <button class="btn-icon delete" title="Supprimer" onclick="deleteService(${s.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+
+    function renderStats() {
+        const appointments = DB.get('appointments');
+        const services = DB.get('services');
+
+        // Revenue (completed appointments only)
+        const completed = appointments.filter(a => a.status === 'completed');
+        let revenue = 0;
+        completed.forEach(a => {
+            const svc = services.find(s => s.name === a.service);
+            if (svc) revenue += svc.price;
+        });
+        document.getElementById('statsRevenue').textContent = revenue.toLocaleString() + ' DA';
+
+        // Average per day
+        const daysSet = new Set(appointments.map(a => a.date));
+        const avg = daysSet.size > 0 ? (appointments.length / daysSet.size).toFixed(1) : 0;
+        document.getElementById('statsAvg').textContent = avg;
+
+        // Most popular service
+        const serviceCounts = {};
+        appointments.forEach(a => {
+            serviceCounts[a.service] = (serviceCounts[a.service] || 0) + 1;
+        });
+        const popular = Object.entries(serviceCounts).sort((a, b) => b[1] - a[1])[0];
+        document.getElementById('statsPopular').textContent = popular ? popular[0] : '-';
+
+        // Service chart
+        const serviceChart = document.getElementById('serviceChart');
+        const entries = Object.entries(serviceCounts);
+        const maxSvc = Math.max(...entries.map(e => e[1]), 1);
+        serviceChart.innerHTML = entries.slice(0, 6).map(([name, count]) => `
+            <div class="bar" style="height: ${(count / maxSvc) * 160}px;" title="${name}: ${count}">
+                <span class="bar-value">${count}</span>
+                <span class="bar-label">${name.split(' ')[0]}</span>
+            </div>
+        `).join('');
+
+        // Monthly chart
+        const monthlyChart = document.getElementById('monthlyChart');
+        const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
+        const monthlyCounts = new Array(12).fill(0);
+        appointments.forEach(a => {
+            const m = new Date(a.date).getMonth();
+            if (!isNaN(m)) monthlyCounts[m]++;
+        });
+        const maxMonth = Math.max(...monthlyCounts, 1);
+        monthlyChart.innerHTML = monthlyCounts.map((val, i) => `
+            <div class="bar" style="height: ${(val / maxMonth) * 160}px;">
+                <span class="bar-value">${val}</span>
+                <span class="bar-label">${months[i]}</span>
+            </div>
+        `).join('');
+    }
+
+    // ================================== //
+    // SEARCH & FILTER                    //
+    // ================================== //
+    document.getElementById('searchAppt').addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('#appointmentsTable tr');
+        rows.forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+        });
+    });
+
+    document.getElementById('filterApptStatus').addEventListener('change', (e) => {
+        const status = e.target.value;
+        const appointments = DB.get('appointments');
+        const filtered = status === 'all' ? appointments : appointments.filter(a => a.status === status);
+        const tbody = document.getElementById('appointmentsTable');
+        tbody.innerHTML = filtered.map((a, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td><strong>${a.name}</strong></td>
+                <td>${a.phone}</td>
+                <td>${a.car}</td>
+                <td>${a.service}</td>
+                <td>${a.date}</td>
+                <td>${a.time}</td>
+                <td>${getStatusBadge(a.status)}</td>
+                <td>
+                    <div class="action-btns">
+                        <button class="btn-icon whatsapp" title="WhatsApp" onclick="sendWhatsApp('${a.phone}','${a.name}','${a.service}','${a.date}','${a.time}')"><i class="fab fa-whatsapp"></i></button>
+                        ${a.status === 'pending' ? `<button class="btn-icon view" title="Confirmer" onclick="changeStatus(${a.id},'confirmed')"><i class="fas fa-check"></i></button>` : ''}
+                        ${a.status === 'confirmed' ? `<button class="btn-icon edit" title="Terminer" onclick="changeStatus(${a.id},'completed')"><i class="fas fa-flag-checkered"></i></button>` : ''}
+                        <button class="btn-icon delete" title="Supprimer" onclick="deleteAppointment(${a.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    });
+
+    document.getElementById('searchClient').addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('#clientsTable tr');
+        rows.forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+        });
+    });
+
+    // ================================== //
+    // SETTINGS                           //
+    // ================================== //
+    document.getElementById('settingsForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newUser = document.getElementById('settingsUser').value.trim();
+        const newPass = document.getElementById('settingsPass').value;
+
+        if (newUser) {
+            const creds = DB.get('credentials');
+            creds.username = newUser;
+            if (newPass) creds.password = newPass;
+            DB.set('credentials', creds);
+            alert('Paramètres enregistrés avec succès !');
+        }
+    });
+
+    </script>
+</body>
+</html>
