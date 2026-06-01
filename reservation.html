@@ -404,17 +404,17 @@ a { text-decoration: none; color: inherit; }
             </a>
             <a href="index.html" class="btn-back">
                 <i class="fas fa-arrow-left"></i>
-                Retour à l'accueil
+                <span data-lang="res_back">Retour à l'accueil</span>
             </a>
         </div>
     </header>
 
     <!-- Auth Banner -->
     <div id="authBanner" style="width:100%;max-width:800px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:16px 22px;margin-bottom:20px;display:none;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;backdrop-filter:blur(10px);">
-        <p style="color:rgba(255,255,255,0.85);font-size:0.88rem;"><i class="fas fa-info-circle" style="color:var(--orange);margin-right:6px;"></i> Connectez-vous pour pré-remplir vos informations</p>
+        <p style="color:rgba(255,255,255,0.85);font-size:0.88rem;"><i class="fas fa-info-circle" style="color:var(--orange);margin-right:6px;"></i> <span data-lang="res_connect_msg">Connectez-vous pour pré-remplir vos informations</span></p>
         <div style="display:flex;gap:10px;">
-            <a href="connexion.html" style="background:var(--bleu-electrique);color:#fff;padding:8px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;">Connexion</a>
-            <a href="inscription.html" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:8px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;">S'inscrire</a>
+            <a href="connexion.html" data-lang="res_login_btn" style="background:var(--bleu-electrique);color:#fff;padding:8px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;">Connexion</a>
+            <a href="inscription.html" data-lang="res_register_btn" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:8px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;">S'inscrire</a>
         </div>
     </div>
 
@@ -424,70 +424,70 @@ a { text-decoration: none; color: inherit; }
         <!-- Form -->
         <div id="formSection">
             <div class="form-title">
-                <h1><i class="fas fa-calendar-check"></i> Prendre Rendez-vous</h1>
-                <p>Remplissez le formulaire ci-dessous pour réserver votre lavage</p>
+                <h1><i class="fas fa-calendar-check"></i> <span data-lang="res_page_title">Prendre Rendez-vous</span></h1>
+                <p data-lang="res_page_desc">Remplissez le formulaire ci-dessous pour réserver votre lavage</p>
             </div>
 
             <form id="reservationForm">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Nom complet <span class="required">*</span></label>
-                        <input type="text" id="fullName" placeholder="Votre nom complet" required>
+                        <label data-lang="res_name">Nom complet <span class="required">*</span></label>
+                        <input type="text" id="fullName" placeholder="Votre nom complet" data-lang-placeholder="res_name" required>
                         <span class="form-error">Veuillez entrer votre nom complet</span>
                     </div>
                     <div class="form-group">
-                        <label>Téléphone <span class="required">*</span></label>
+                        <label data-lang="res_phone">Téléphone <span class="required">*</span></label>
                         <input type="tel" id="phone" placeholder="07XX XX XX XX" required>
                         <span class="form-error">Veuillez entrer un numéro valide (min 10 chiffres)</span>
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
+                        <label data-lang="res_email">Email</label>
                         <input type="email" id="email" placeholder="votre@email.com">
                         <span class="form-error">Veuillez entrer un email valide</span>
                     </div>
                     <div class="form-group">
-                        <label>Marque du véhicule <span class="required">*</span></label>
-                        <input type="text" id="carBrand" placeholder="Ex: Toyota, Peugeot, Hyundai..." required>
+                        <label data-lang="res_car_brand">Marque du véhicule <span class="required">*</span></label>
+                        <input type="text" id="carBrand" placeholder="Ex: Toyota, Peugeot, Hyundai..." data-lang-placeholder="res_car_brand" required>
                         <span class="form-error">Veuillez entrer la marque du véhicule</span>
                     </div>
                     <div class="form-group">
-                        <label>Type du véhicule <span class="required">*</span></label>
+                        <label data-lang="res_car_type">Type du véhicule <span class="required">*</span></label>
                         <select id="carType" required>
-                            <option value="">-- Sélectionner le type --</option>
-                            <option value="Berline">Berline</option>
-                            <option value="SUV">SUV</option>
-                            <option value="4x4">4x4</option>
-                            <option value="Citadine">Citadine</option>
-                            <option value="Utilitaire">Utilitaire</option>
-                            <option value="Autre">Autre</option>
+                            <option value="" data-lang="res_select">-- Sélectionner le type --</option>
+                            <option value="Berline" data-lang="res_berline">Berline</option>
+                            <option value="SUV" data-lang="res_suv">SUV</option>
+                            <option value="4x4" data-lang="res_4x4">4x4</option>
+                            <option value="Citadine" data-lang="res_citadine">Citadine</option>
+                            <option value="Utilitaire" data-lang="res_utilitaire">Utilitaire</option>
+                            <option value="Autre" data-lang="res_autre">Autre</option>
                         </select>
                         <span class="form-error">Veuillez sélectionner un type</span>
                     </div>
                     <div class="form-group">
-                        <label>Service demandé <span class="required">*</span></label>
+                        <label data-lang="res_service">Service demandé <span class="required">*</span></label>
                         <select id="service" required>
-                            <option value="">-- Sélectionner le service --</option>
+                            <option value="" data-lang="res_select">-- Sélectionner le service --</option>
                         </select>
                         <span class="form-error">Veuillez choisir un service</span>
                     </div>
                     <div class="form-group">
-                        <label>Date souhaitée <span class="required">*</span></label>
+                        <label data-lang="res_date">Date souhaitée <span class="required">*</span></label>
                         <input type="date" id="date" required>
                         <span class="form-error">Veuillez choisir une date valide</span>
                     </div>
                     <div class="form-group">
-                        <label>Heure souhaitée <span class="required">*</span></label>
+                        <label data-lang="res_time">Heure souhaitée <span class="required">*</span></label>
                         <input type="time" id="time" min="08:00" max="19:30" required>
                         <span class="form-error">Veuillez choisir une heure (08h - 19h30)</span>
                     </div>
                     <div class="form-group full-width">
-                        <label>Message (optionnel)</label>
-                        <textarea id="message" placeholder="Précisions supplémentaires, demandes particulières..."></textarea>
+                        <label data-lang="res_message">Message (optionnel)</label>
+                        <textarea id="message" placeholder="Précisions supplémentaires, demandes particulières..." data-lang-placeholder="res_message"></textarea>
                     </div>
                 </div>
                 <button type="submit" class="btn-submit" id="submitBtn">
                     <i class="fas fa-paper-plane"></i>
-                    Confirmer le Rendez-vous
+                    <span data-lang="res_submit">Confirmer le Rendez-vous</span>
                 </button>
             </form>
         </div>
@@ -497,20 +497,20 @@ a { text-decoration: none; color: inherit; }
             <div class="success-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2>Rendez-vous Enregistré !</h2>
-            <p>Votre demande a été envoyée avec succès.</p>
-            <p style="color:var(--orange);font-weight:600;">Notre équipe confirmera votre rendez-vous prochainement.</p>
+            <h2 data-lang="res_success_title">Rendez-vous Enregistré !</h2>
+            <p data-lang="res_success_desc">Votre demande a été envoyée avec succès.</p>
+            <p style="color:var(--orange);font-weight:600;" data-lang="res_success_status">Notre équipe confirmera votre rendez-vous prochainement.</p>
 
             <div class="success-details" id="successDetails"></div>
 
             <button class="btn-new-reservation" onclick="resetForm()">
                 <i class="fas fa-plus"></i>
-                Nouveau Rendez-vous
+                <span data-lang="res_new_rdv">Nouveau Rendez-vous</span>
             </button>
             <br><br>
             <a href="index.html" class="btn-new-reservation" style="background:linear-gradient(135deg, var(--orange), #e07800);">
                 <i class="fas fa-home"></i>
-                Retour à l'accueil
+                <span data-lang="res_back_home">Retour à l'accueil</span>
             </a>
         </div>
     </div>
@@ -519,9 +519,9 @@ a { text-decoration: none; color: inherit; }
     <footer class="page-footer">
         <p>MONTPLAISIR LAVAGE AUTO — Sidi Bel Abbès</p>
         <div class="info-items">
-            <span><i class="fas fa-map-marker-alt"></i> Montplaisir, Sidi Bel Abbès</span>
-            <span><i class="fas fa-phone"></i> 07 71 12 94 69</span>
-            <span><i class="fas fa-clock"></i> Lun-Dim : 08h00 – 20h00</span>
+            <span><i class="fas fa-map-marker-alt"></i> <span data-lang="footer_address">Montplaisir, Sidi Bel Abbès</span></span>
+            <span><i class="fas fa-phone"></i> <span data-lang="footer_phone">07 71 12 94 69</span></span>
+            <span><i class="fas fa-clock"></i> <span data-lang="footer_hours">Lun-Dim : 08h00 – 20h00</span></span>
         </div>
     </footer>
 

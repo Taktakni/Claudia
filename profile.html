@@ -225,9 +225,9 @@ button { cursor:pointer; font-family:inherit; }
         <div class="header-container">
             <a href="index.html" class="logo"><i class="fas fa-car-side"></i> MONTPLAISIR</a>
             <nav class="header-nav">
-                <a href="index.html"><i class="fas fa-home"></i> <span>Accueil</span></a>
-                <a href="reservation.html"><i class="fas fa-calendar-plus"></i> <span>Réserver</span></a>
-                <button class="btn-logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+                <a href="index.html"><i class="fas fa-home"></i> <span data-lang="profile_home">Accueil</span></a>
+                <a href="reservation.html"><i class="fas fa-calendar-plus"></i> <span data-lang="profile_reserve">Réserver</span></a>
+                <button class="btn-logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span data-lang="profile_logout">Déconnexion</span></button>
             </nav>
         </div>
     </header>
@@ -241,7 +241,7 @@ button { cursor:pointer; font-family:inherit; }
             <div class="profile-info">
                 <h2 id="profileName">Chargement...</h2>
                 <p id="profilePhone"></p>
-                <span class="member-since"><i class="fas fa-calendar-alt"></i> <span id="memberSince"></span></span>
+                <span class="member-since"><i class="fas fa-calendar-alt"></i> <span id="memberSince" data-lang="profile_member_since"></span></span>
             </div>
         </div>
 
@@ -250,26 +250,26 @@ button { cursor:pointer; font-family:inherit; }
             <div class="stat-card">
                 <div class="stat-icon blue"><i class="fas fa-calendar-check"></i></div>
                 <div class="stat-value" id="statRdv">0</div>
-                <div class="stat-label">Rendez-vous</div>
+                <div class="stat-label" data-lang="profile_rdv">Rendez-vous</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon orange"><i class="fas fa-star"></i></div>
                 <div class="stat-value" id="statPoints">0</div>
-                <div class="stat-label">Points fidélité</div>
+                <div class="stat-label" data-lang="profile_points">Points fidélité</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon green"><i class="fas fa-car"></i></div>
                 <div class="stat-value" id="statVisits">0</div>
-                <div class="stat-label">Visites totales</div>
+                <div class="stat-label" data-lang="profile_visits">Visites totales</div>
             </div>
         </div>
 
         <!-- Tabs -->
         <div class="tabs-container">
             <div class="tabs-nav">
-                <button class="tab-btn active" data-tab="rdv"><i class="fas fa-calendar-alt"></i> Mes RDV</button>
-                <button class="tab-btn" data-tab="edit"><i class="fas fa-user-edit"></i> Mon Profil</button>
-                <button class="tab-btn" data-tab="password"><i class="fas fa-lock"></i> Mot de passe</button>
+                <button class="tab-btn active" data-tab="rdv"><i class="fas fa-calendar-alt"></i> <span data-lang="profile_tab_rdv">Mes RDV</span></button>
+                <button class="tab-btn" data-tab="edit"><i class="fas fa-user-edit"></i> <span data-lang="profile_tab_edit">Mon Profil</span></button>
+                <button class="tab-btn" data-tab="password"><i class="fas fa-lock"></i> <span data-lang="profile_tab_pass">Mot de passe</span></button>
             </div>
 
             <!-- Tab: Mes RDV -->
@@ -280,32 +280,32 @@ button { cursor:pointer; font-family:inherit; }
             <!-- Tab: Modifier Profil -->
             <div class="tab-content" id="tab-edit">
                 <div class="edit-section">
-                    <h3><i class="fas fa-user-edit"></i> Modifier mes informations</h3>
-                    <div class="alert success" id="editSuccess"><i class="fas fa-check-circle"></i> Profil mis à jour avec succès !</div>
+                    <h3><i class="fas fa-user-edit"></i> <span data-lang="profile_edit_title">Modifier mes informations</span></h3>
+                    <div class="alert success" id="editSuccess"><i class="fas fa-check-circle"></i> <span data-lang="profile_edit_success">Profil mis à jour avec succès !</span></div>
                     <form id="editForm">
                         <div class="form-grid">
                             <div class="form-group">
-                                <label>Prénom</label>
+                                <label data-lang="profile_edit_firstname">Prénom</label>
                                 <input type="text" id="editFirstName">
                             </div>
                             <div class="form-group">
-                                <label>Nom</label>
+                                <label data-lang="profile_edit_lastname">Nom</label>
                                 <input type="text" id="editLastName">
                             </div>
                             <div class="form-group">
-                                <label>Email</label>
+                                <label data-lang="profile_edit_email">Email</label>
                                 <input type="email" id="editEmail">
                             </div>
                             <div class="form-group">
-                                <label>Téléphone</label>
+                                <label data-lang="profile_edit_phone">Téléphone</label>
                                 <input type="tel" id="editPhone" disabled style="opacity:0.6;">
                             </div>
                             <div class="form-group">
-                                <label>Véhicule</label>
-                                <input type="text" id="editCar" placeholder="Marque du véhicule">
+                                <label data-lang="profile_edit_car">Véhicule</label>
+                                <input type="text" id="editCar" placeholder="Marque du véhicule" data-lang-placeholder="profile_edit_car">
                             </div>
                             <div class="form-group">
-                                <label>Type véhicule</label>
+                                <label data-lang="profile_edit_cartype">Type véhicule</label>
                                 <select id="editCarType">
                                     <option value="">--</option>
                                     <option value="Berline">Berline</option>
@@ -317,11 +317,11 @@ button { cursor:pointer; font-family:inherit; }
                                 </select>
                             </div>
                             <div class="form-group full">
-                                <label>Adresse</label>
-                                <input type="text" id="editAddress" placeholder="Votre adresse">
+                                <label data-lang="profile_edit_address">Adresse</label>
+                                <input type="text" id="editAddress" placeholder="Votre adresse" data-lang-placeholder="profile_edit_address">
                             </div>
                         </div>
-                        <button type="submit" class="btn-save"><i class="fas fa-save"></i> Enregistrer</button>
+                        <button type="submit" class="btn-save"><i class="fas fa-save"></i> <span data-lang="profile_edit_save">Enregistrer</span></button>
                     </form>
                 </div>
             </div>
@@ -329,25 +329,25 @@ button { cursor:pointer; font-family:inherit; }
             <!-- Tab: Mot de passe -->
             <div class="tab-content" id="tab-password">
                 <div class="edit-section">
-                    <h3><i class="fas fa-lock"></i> Changer le mot de passe</h3>
+                    <h3><i class="fas fa-lock"></i> <span data-lang="profile_pass_title">Changer le mot de passe</span></h3>
                     <div class="alert error" id="passError"></div>
-                    <div class="alert success" id="passSuccess"><i class="fas fa-check-circle"></i> Mot de passe modifié avec succès !</div>
+                    <div class="alert success" id="passSuccess"><i class="fas fa-check-circle"></i> <span data-lang="profile_pass_success">Mot de passe modifié avec succès !</span></div>
                     <form id="passwordForm">
                         <div class="form-grid">
                             <div class="form-group">
-                                <label>Mot de passe actuel</label>
+                                <label data-lang="profile_pass_current">Mot de passe actuel</label>
                                 <input type="password" id="currentPass" required>
                             </div>
                             <div class="form-group">
-                                <label>Nouveau mot de passe</label>
-                                <input type="password" id="newPass" required placeholder="Min 6 caractères">
+                                <label data-lang="profile_pass_new">Nouveau mot de passe</label>
+                                <input type="password" id="newPass" required placeholder="Min 6 caractères" data-lang-placeholder="profile_pass_new">
                             </div>
                             <div class="form-group">
-                                <label>Confirmer le nouveau</label>
+                                <label data-lang="profile_pass_confirm">Confirmer le nouveau</label>
                                 <input type="password" id="confirmNewPass" required>
                             </div>
                         </div>
-                        <button type="submit" class="btn-save-pass"><i class="fas fa-key"></i> Changer</button>
+                        <button type="submit" class="btn-save-pass"><i class="fas fa-key"></i> <span data-lang="profile_pass_btn">Changer</span></button>
                     </form>
                 </div>
             </div>
@@ -406,9 +406,10 @@ button { cursor:pointer; font-family:inherit; }
             container.innerHTML = `
                 <div class="empty-state">
                     <i class="fas fa-calendar-times"></i>
-                    <p>Aucun rendez-vous pour le moment</p>
-                    <a href="reservation.html" class="btn-action"><i class="fas fa-plus"></i> Prendre un rendez-vous</a>
+                    <p data-lang="profile_no_rdv">Aucun rendez-vous pour le moment</p>
+                    <a href="reservation.html" class="btn-action"><i class="fas fa-plus"></i> <span data-lang="profile_take_rdv">Prendre un rendez-vous</span></a>
                 </div>`;
+            Lang.applyToPage();
             return;
         }
 

@@ -193,12 +193,12 @@ a { text-decoration:none; color:inherit; }
         <div class="container">
             <a href="index.html" class="logo"><i class="fas fa-car-side"></i> MONTPLAISIR</a>
             <nav class="nav-links">
-                <a href="index.html">Accueil</a>
-                <a href="boutique.html" class="active">Boutique</a>
-                <a href="profile.html">Mon Profil</a>
+                <a href="index.html" data-lang="nav_home">Accueil</a>
+                <a href="boutique.html" class="active" data-lang="nav_boutique">Boutique</a>
+                <a href="profile.html" data-lang="nav_profile">Mon Profil</a>
             </nav>
             <button class="btn-cart-header" onclick="document.querySelector('.cart-sidebar').scrollIntoView({behavior:'smooth'})">
-                <i class="fas fa-shopping-cart"></i> Panier
+                <i class="fas fa-shopping-cart"></i> <span data-lang="shop_cart_btn">Panier</span>
                 <span class="cart-badge" id="cartBadge">0</span>
             </button>
         </div>
@@ -207,8 +207,8 @@ a { text-decoration:none; color:inherit; }
     <!-- BANNER -->
     <div class="container">
         <div class="shop-banner">
-            <h1><i class="fas fa-store"></i> Notre Boutique</h1>
-            <p>Découvrez nos produits et accessoires pour votre véhicule</p>
+            <h1><i class="fas fa-store"></i> <span data-lang="shop_title">Notre Boutique</span></h1>
+            <p data-lang="shop_desc">Découvrez nos produits et accessoires pour votre véhicule</p>
         </div>
     </div>
 
@@ -219,9 +219,9 @@ a { text-decoration:none; color:inherit; }
             <div class="products-section">
                 <!-- Filters -->
                 <div class="filter-tabs">
-                    <button class="filter-tab active" data-category="all">Tous</button>
-                    <button class="filter-tab" data-category="Produits">Produits</button>
-                    <button class="filter-tab" data-category="Accessoires">Accessoires</button>
+                    <button class="filter-tab active" data-category="all" data-lang="shop_all">Tous</button>
+                    <button class="filter-tab" data-category="Produits" data-lang="shop_products">Produits</button>
+                    <button class="filter-tab" data-category="Accessoires" data-lang="shop_accessories">Accessoires</button>
                 </div>
 
                 <!-- Products Grid -->
@@ -230,34 +230,34 @@ a { text-decoration:none; color:inherit; }
 
             <!-- Cart Sidebar -->
             <aside class="cart-sidebar">
-                <h3 class="cart-title"><i class="fas fa-shopping-cart"></i> Mon Panier</h3>
+                <h3 class="cart-title"><i class="fas fa-shopping-cart"></i> <span data-lang="shop_cart_title">Mon Panier</span></h3>
                 <div id="cartAlert"></div>
                 <div id="cartItems">
-                    <div class="cart-empty"><i class="fas fa-shopping-bag"></i> Votre panier est vide</div>
+                    <div class="cart-empty"><i class="fas fa-shopping-bag"></i> <span data-lang="shop_cart_empty">Votre panier est vide</span></div>
                 </div>
                 <div class="cart-total" id="cartTotalSection" style="display:none;">
-                    <span>Total :</span>
+                    <span data-lang="shop_total">Total :</span>
                     <strong id="cartTotal">0 DA</strong>
                 </div>
 
                 <!-- Checkout Form -->
                 <div class="checkout-section" id="checkoutSection" style="display:none;">
-                    <h4><i class="fas fa-truck"></i> Informations de livraison</h4>
+                    <h4><i class="fas fa-truck"></i> <span data-lang="shop_checkout_title">Informations de livraison</span></h4>
                     <form id="checkoutForm">
                         <div class="form-group">
-                            <label>Nom complet *</label>
-                            <input type="text" id="checkName" placeholder="Votre nom" required>
+                            <label data-lang="shop_checkout_name">Nom complet *</label>
+                            <input type="text" id="checkName" placeholder="Votre nom" data-lang-placeholder="shop_checkout_name" required>
                         </div>
                         <div class="form-group">
-                            <label>Téléphone *</label>
+                            <label data-lang="shop_checkout_phone">Téléphone *</label>
                             <input type="tel" id="checkPhone" placeholder="07XX XX XX XX" required>
                         </div>
                         <div class="form-group">
-                            <label>Adresse de livraison *</label>
-                            <input type="text" id="checkAddress" placeholder="Votre adresse" required>
+                            <label data-lang="shop_checkout_address">Adresse de livraison *</label>
+                            <input type="text" id="checkAddress" placeholder="Votre adresse" data-lang-placeholder="shop_checkout_address" required>
                         </div>
                         <button type="submit" class="btn-checkout" id="checkoutBtn">
-                            <i class="fas fa-check-circle"></i> Confirmer la commande
+                            <i class="fas fa-check-circle"></i> <span data-lang="shop_checkout_btn">Confirmer la commande</span>
                         </button>
                     </form>
                 </div>
