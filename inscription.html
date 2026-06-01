@@ -6,6 +6,7 @@
     <title>Inscription | MONTPLAISIR LAVAGE AUTO</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
 :root {
     --bleu-fonce: #071B3B;
@@ -149,8 +150,8 @@ a { text-decoration:none; color:inherit; }
                     <span class="form-error">Numéro valide requis (min 10 chiffres)</span>
                 </div>
                 <div class="form-group">
-                    <label data-lang="reg_email">Email</label>
-                    <input type="email" id="email" placeholder="votre@email.com">
+                    <label data-lang="reg_email">Email <span class="req">*</span></label>
+                    <input type="email" id="email" placeholder="votre@email.com" required>
                     <span class="form-error">Email invalide</span>
                 </div>
                 <div class="form-group">
@@ -191,6 +192,38 @@ a { text-decoration:none; color:inherit; }
             </button>
         </form>
 
+        <!-- OTP Verification Section -->
+        <div id="otpSection" style="display:none;">
+            <div class="auth-title">
+                <h1><i class="fas fa-envelope-open-text"></i> Vérification Email</h1>
+                <p id="otpDesc">Un code de vérification a été envoyé à votre email</p>
+            </div>
+            <div class="alert success active" id="otpSentAlert" style="display:none;">
+                <i class="fas fa-check-circle"></i> Code envoyé avec succès !
+            </div>
+            <div class="alert error" id="otpErrorAlert"></div>
+            <div style="display:flex;gap:10px;justify-content:center;margin:30px 0;">
+                <input type="text" id="otp1" maxlength="1" class="otp-input" style="width:55px;height:60px;text-align:center;font-size:1.5rem;font-weight:800;border:2px solid var(--gris-border);border-radius:12px;outline:none;transition:all 0.3s ease;" oninput="otpAutoMove(this,'otp2')">
+                <input type="text" id="otp2" maxlength="1" class="otp-input" style="width:55px;height:60px;text-align:center;font-size:1.5rem;font-weight:800;border:2px solid var(--gris-border);border-radius:12px;outline:none;transition:all 0.3s ease;" oninput="otpAutoMove(this,'otp3')">
+                <input type="text" id="otp3" maxlength="1" class="otp-input" style="width:55px;height:60px;text-align:center;font-size:1.5rem;font-weight:800;border:2px solid var(--gris-border);border-radius:12px;outline:none;transition:all 0.3s ease;" oninput="otpAutoMove(this,'otp4')">
+                <input type="text" id="otp4" maxlength="1" class="otp-input" style="width:55px;height:60px;text-align:center;font-size:1.5rem;font-weight:800;border:2px solid var(--gris-border);border-radius:12px;outline:none;transition:all 0.3s ease;" oninput="verifyOTP()">
+            </div>
+            <button type="button" class="btn-submit" id="verifyBtn" onclick="verifyOTP()">
+                <i class="fas fa-check-circle"></i> Vérifier le code
+            </button>
+            <div style="text-align:center;margin-top:15px;">
+                <button type="button" id="resendBtn" onclick="resendOTP()" style="background:none;border:none;color:var(--bleu-electrique);font-size:0.85rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;">
+                    <i class="fas fa-redo"></i> Renvoyer le code
+                </button>
+                <span id="resendTimer" style="font-size:0.82rem;color:#999;margin-left:10px;"></span>
+            </div>
+            <div style="text-align:center;margin-top:15px;">
+                <button type="button" onclick="backToForm()" style="background:none;border:none;color:#666;font-size:0.85rem;cursor:pointer;font-family:'Poppins',sans-serif;">
+                    <i class="fas fa-arrow-left"></i> Modifier mes informations
+                </button>
+            </div>
+        </div>
+
         <p class="auth-footer">
             <span data-lang="reg_has_account">Déjà inscrit ?</span> <a href="connexion.html" data-lang="reg_login_link">Se connecter</a>
         </p>
@@ -198,89 +231,260 @@ a { text-decoration:none; color:inherit; }
 
     <script src="db-clients.js"></script>
     <script>
-    'use strict';
+'use strict';
 
-    // Si déjà connecté, rediriger vers profil
-    if (ClientsDB.isLoggedIn()) {
-        window.location.href = 'profile.html';
+// If already logged in, redirect
+if (ClientsDB.isLoggedIn()) {
+    window.location.href = 'profile.html';
+}
+
+// ================================== //
+// EMAILJS INIT                       //
+// ================================== //
+emailjs.init('NlfMaIJBJA0hXetr9');
+
+let generatedOTP = '';
+let pendingUserData = null;
+let resendCooldown = 0;
+let resendInterval = null;
+
+const form = document.getElementById('registerForm');
+const alertError = document.getElementById('alertError');
+const alertSuccess = document.getElementById('alertSuccess');
+const otpSection = document.getElementById('otpSection');
+const formSection = form; // the form itself
+
+// ================================== //
+// FORM SUBMISSION                    //
+// ================================== //
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    hideAlerts();
+
+    const data = {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        phone: document.getElementById('phone').value.trim().replace(/\s/g, ''),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value,
+        car: document.getElementById('car').value.trim(),
+        carType: document.getElementById('carType').value,
+        address: document.getElementById('address').value.trim()
+    };
+
+    const confirmPass = document.getElementById('confirmPassword').value;
+
+    // Validation
+    let valid = true;
+    document.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
+
+    if (!data.firstName || data.firstName.length < 2) { setErr('firstName'); valid = false; }
+    if (!data.lastName || data.lastName.length < 2) { setErr('lastName'); valid = false; }
+    if (!data.phone || data.phone.length < 10) { setErr('phone'); valid = false; }
+    if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { setErr('email'); valid = false; }
+    if (!data.password || data.password.length < 6) { setErr('password'); valid = false; }
+    if (data.password !== confirmPass) { setErr('confirmPassword'); valid = false; }
+
+    if (!valid) return;
+
+    // Check if phone/email already exists
+    const users = ClientsDB.getAllUsers();
+    if (users.find(u => u.phone === data.phone)) {
+        showAlert('error', 'Ce numéro de téléphone est déjà utilisé.');
+        return;
+    }
+    if (users.find(u => u.email === data.email)) {
+        showAlert('error', 'Cet email est déjà utilisé.');
+        return;
     }
 
-    const form = document.getElementById('registerForm');
-    const alertError = document.getElementById('alertError');
-    const alertSuccess = document.getElementById('alertSuccess');
+    // Store pending data and send OTP
+    pendingUserData = data;
+    sendOTP(data.email, data.firstName);
+});
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        hideAlerts();
+// ================================== //
+// OTP SENDING                        //
+// ================================== //
+function sendOTP(email, name) {
+    // Generate 4-digit OTP
+    generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
 
-        const data = {
-            firstName: document.getElementById('firstName').value.trim(),
-            lastName: document.getElementById('lastName').value.trim(),
-            phone: document.getElementById('phone').value.trim().replace(/\s/g, ''),
-            email: document.getElementById('email').value.trim(),
-            password: document.getElementById('password').value,
-            car: document.getElementById('car').value.trim(),
-            carType: document.getElementById('carType').value,
-            address: document.getElementById('address').value.trim()
-        };
+    // Disable form submit
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi du code...';
 
-        const confirmPass = document.getElementById('confirmPassword').value;
+    // Send via EmailJS
+    emailjs.send('service_m821oa6', 'template_xmy9h2f', {
+        to_email: email,
+        to_name: name,
+        otp_code: generatedOTP,
+        message: 'Votre code de vérification Montplaisir Lavage est : ' + generatedOTP
+    }).then(() => {
+        // Show OTP section
+        form.style.display = 'none';
+        otpSection.style.display = 'block';
+        document.getElementById('otpSentAlert').style.display = 'flex';
+        document.getElementById('otpDesc').textContent = 'Un code a été envoyé à ' + email;
+        document.getElementById('otp1').focus();
+        startResendCooldown();
+    }).catch((error) => {
+        console.error('EmailJS Error:', error);
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('submitBtn').innerHTML = '<i class="fas fa-user-plus"></i> S\'inscrire';
+        showAlert('error', 'Erreur lors de l\'envoi du code. Vérifiez votre email et réessayez.');
+    });
+}
 
-        // Validation
-        let valid = true;
-        document.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
+// ================================== //
+// OTP VERIFICATION                   //
+// ================================== //
+function verifyOTP() {
+    const entered = document.getElementById('otp1').value +
+                    document.getElementById('otp2').value +
+                    document.getElementById('otp3').value +
+                    document.getElementById('otp4').value;
 
-        if (!data.firstName || data.firstName.length < 2) { setErr('firstName'); valid = false; }
-        if (!data.lastName || data.lastName.length < 2) { setErr('lastName'); valid = false; }
-        if (!data.phone || data.phone.length < 10) { setErr('phone'); valid = false; }
-        if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { setErr('email'); valid = false; }
-        if (!data.password || data.password.length < 6) { setErr('password'); valid = false; }
-        if (data.password !== confirmPass) { setErr('confirmPassword'); valid = false; }
+    if (entered.length < 4) return;
 
-        if (!valid) return;
+    const otpError = document.getElementById('otpErrorAlert');
+    otpError.classList.remove('active');
 
-        // Direct registration (no OTP)
-        const result = ClientsDB.register(data);
+    if (entered === generatedOTP) {
+        // OTP correct - register user
+        document.getElementById('verifyBtn').disabled = true;
+        document.getElementById('verifyBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Création du compte...';
 
+        const result = ClientsDB.register(pendingUserData);
         if (result.error) {
-            showAlert('error', result.error);
+            otpError.textContent = result.error;
+            otpError.classList.add('active');
+            document.getElementById('verifyBtn').disabled = false;
+            document.getElementById('verifyBtn').innerHTML = '<i class="fas fa-check-circle"></i> Vérifier le code';
             return;
         }
 
-        // Success
-        showAlert('success', 'Inscription réussie ! Redirection vers votre profil...');
-        document.getElementById('submitBtn').disabled = true;
+        // Success!
+        otpSection.innerHTML = '<div style="text-align:center;padding:40px 20px;"><div style="width:80px;height:80px;background:rgba(37,211,102,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:2.5rem;color:#25D366;"><i class="fas fa-check-circle"></i></div><h2 style="font-size:1.5rem;font-weight:800;color:var(--bleu-fonce);margin-bottom:10px;">Compte Créé !</h2><p style="color:#666;margin-bottom:5px;">Bienvenue ' + pendingUserData.firstName + ' !</p><p style="color:var(--orange);font-weight:600;">Redirection vers votre profil...</p></div>';
 
         setTimeout(() => {
             window.location.href = 'profile.html';
-        }, 1500);
-    });
-
-    function setErr(id) { document.getElementById(id).parentElement.classList.add('error'); }
-    function hideAlerts() { alertError.classList.remove('active'); alertSuccess.classList.remove('active'); }
-    function showAlert(type, msg) {
-        const el = type === 'error' ? alertError : alertSuccess;
-        el.textContent = msg;
-        el.classList.add('active');
+        }, 2000);
+    } else {
+        // Wrong OTP
+        otpError.textContent = 'Code incorrect. Veuillez réessayer.';
+        otpError.classList.add('active');
+        // Clear inputs
+        document.querySelectorAll('.otp-input').forEach(inp => { inp.value = ''; inp.style.borderColor = 'var(--rouge)'; });
+        document.getElementById('otp1').focus();
+        setTimeout(() => {
+            document.querySelectorAll('.otp-input').forEach(inp => inp.style.borderColor = 'var(--gris-border)');
+        }, 2000);
     }
+}
 
-    function togglePassword(id) {
-        const input = document.getElementById(id);
-        const icon = input.nextElementSibling.querySelector('i');
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.classList.replace('fa-eye', 'fa-eye-slash');
-        } else {
-            input.type = 'password';
-            icon.classList.replace('fa-eye-slash', 'fa-eye');
+// ================================== //
+// OTP HELPERS                        //
+// ================================== //
+function otpAutoMove(current, nextId) {
+    if (current.value.length === 1) {
+        const next = document.getElementById(nextId);
+        if (next) next.focus();
+    }
+}
+
+function resendOTP() {
+    if (resendCooldown > 0) return;
+    if (pendingUserData && pendingUserData.email) {
+        generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
+        emailjs.send('service_m821oa6', 'template_xmy9h2f', {
+            to_email: pendingUserData.email,
+            to_name: pendingUserData.firstName,
+            otp_code: generatedOTP,
+            message: 'Votre nouveau code de vérification Montplaisir Lavage est : ' + generatedOTP
+        }).then(() => {
+            document.getElementById('otpSentAlert').style.display = 'flex';
+            startResendCooldown();
+        }).catch(() => {
+            const otpError = document.getElementById('otpErrorAlert');
+            otpError.textContent = 'Erreur lors du renvoi. Réessayez.';
+            otpError.classList.add('active');
+        });
+    }
+}
+
+function startResendCooldown() {
+    resendCooldown = 60;
+    const resendBtn = document.getElementById('resendBtn');
+    const timerSpan = document.getElementById('resendTimer');
+    resendBtn.disabled = true;
+    resendBtn.style.opacity = '0.5';
+
+    if (resendInterval) clearInterval(resendInterval);
+    resendInterval = setInterval(() => {
+        resendCooldown--;
+        timerSpan.textContent = '(' + resendCooldown + 's)';
+        if (resendCooldown <= 0) {
+            clearInterval(resendInterval);
+            resendBtn.disabled = false;
+            resendBtn.style.opacity = '1';
+            timerSpan.textContent = '';
         }
-    }
+    }, 1000);
+}
 
-    // Clear error on focus
-    document.querySelectorAll('.form-group input, .form-group select').forEach(el => {
-        el.addEventListener('focus', () => el.parentElement.classList.remove('error'));
+function backToForm() {
+    otpSection.style.display = 'none';
+    form.style.display = 'block';
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-user-plus"></i> S\'inscrire';
+}
+
+// ================================== //
+// UTILITY FUNCTIONS                  //
+// ================================== //
+function setErr(id) { document.getElementById(id).parentElement.classList.add('error'); }
+function hideAlerts() { alertError.classList.remove('active'); alertSuccess.classList.remove('active'); }
+function showAlert(type, msg) {
+    const el = type === 'error' ? alertError : alertSuccess;
+    el.textContent = msg;
+    el.classList.add('active');
+}
+
+function togglePassword(id) {
+    const input = document.getElementById(id);
+    const icon = input.nextElementSibling.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+}
+
+// Clear error on focus
+document.querySelectorAll('.form-group input, .form-group select').forEach(el => {
+    el.addEventListener('focus', () => el.parentElement.classList.remove('error'));
+});
+
+// OTP input: handle backspace navigation
+document.querySelectorAll('.otp-input').forEach((input, index, arr) => {
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && index > 0) {
+            arr[index - 1].focus();
+        }
     });
-    </script>
+    input.addEventListener('focus', () => {
+        input.style.borderColor = 'var(--bleu-electrique)';
+        input.style.boxShadow = '0 0 0 4px rgba(0,102,255,0.1)';
+    });
+    input.addEventListener('blur', () => {
+        input.style.borderColor = 'var(--gris-border)';
+        input.style.boxShadow = 'none';
+    });
+});
+</script>
 
     <!-- Language Toggle Button -->
     <button id="langToggleBtn" onclick="Lang.toggle()" style="position:fixed;bottom:25px;left:25px;z-index:9999;background:linear-gradient(135deg,var(--bleu-electrique),#0052cc);color:#fff;border:none;padding:12px 20px;border-radius:50px;font-family:'Poppins',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;box-shadow:0 5px 20px rgba(0,102,255,0.3);display:flex;align-items:center;gap:8px;transition:all 0.3s ease;">
