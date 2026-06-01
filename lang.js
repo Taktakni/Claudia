@@ -107,6 +107,14 @@ const Lang = {
             footer_legal: "Mentions légales",
             footer_terms: "Conditions générales",
 
+            // Map section
+            map_title: "Notre Localisation",
+            map_desc: "Retrouvez-nous facilement à Sidi Bel Abbès – Montplaisir",
+            map_hours_title: "Horaires d'ouverture",
+            map_hours: "Lundi – Dimanche : 08h00 – 20h00",
+            map_phone_title: "Téléphone",
+            map_directions: "Obtenir l'itinéraire",
+
             // Reservation page
             res_page_title: "Prendre Rendez-vous",
             res_page_desc: "Remplissez le formulaire ci-dessous pour réserver votre lavage",
@@ -313,6 +321,14 @@ const Lang = {
             footer_copyright: "© 2026 مونبليزير غسيل السيارات. جميع الحقوق محفوظة.",
             footer_legal: "الإشعارات القانونية",
             footer_terms: "الشروط العامة",
+
+            // Map section
+            map_title: "موقعنا",
+            map_desc: "تجدنا بسهولة في سيدي بلعباس – مونبليزير",
+            map_hours_title: "ساعات العمل",
+            map_hours: "الإثنين – الأحد : 08:00 – 20:00",
+            map_phone_title: "الهاتف",
+            map_directions: "الحصول على الاتجاهات",
 
             // Reservation page
             res_page_title: "حجز موعد",
