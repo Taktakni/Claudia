@@ -1251,6 +1251,16 @@ ul {
         font-size: 1rem;
     }
 }
+
+/* RTL Support */
+[dir="rtl"] { direction: rtl; }
+[dir="rtl"] .nav-menu { direction: rtl; }
+[dir="rtl"] .hero-badge, [dir="rtl"] .hero-buttons { direction: rtl; }
+[dir="rtl"] .footer-col li a:hover { padding-left: 0; padding-right: 5px; }
+[dir="rtl"] .service-list li { flex-direction: row-reverse; }
+[dir="rtl"] .vip-bonus li { flex-direction: row-reverse; }
+[dir="rtl"] .footer-contact li { flex-direction: row-reverse; }
+[dir="rtl"] .nav-menu a::after { left: auto; right: 0; }
     </style>
 </head>
 <body>
@@ -1266,19 +1276,19 @@ ul {
                 MONTPLAISIR LAVAGE
             </a>
             <nav class="nav-menu" id="navMenu">
-                <a href="#hero">Accueil</a>
-                <a href="#services">Services</a>
-                <a href="#vip">Offre VIP</a>
-                <a href="reservation.html">Réservation</a>
-                <a href="boutique.html">Boutique</a>
-                <a href="#gallery">Galerie</a>
-                <a href="#reviews">Avis</a>
-                <a href="#contact">Contact</a>
+                <a href="#hero" data-lang="nav_home">Accueil</a>
+                <a href="#services" data-lang="nav_services">Services</a>
+                <a href="#vip" data-lang="nav_vip">Offre VIP</a>
+                <a href="reservation.html" data-lang="nav_reservation">Réservation</a>
+                <a href="boutique.html" data-lang="nav_boutique">Boutique</a>
+                <a href="#gallery" data-lang="nav_gallery">Galerie</a>
+                <a href="#reviews" data-lang="nav_reviews">Avis</a>
+                <a href="#contact" data-lang="nav_contact">Contact</a>
             </nav>
             <div style="display:flex;align-items:center;gap:10px;">
                 <a href="connexion.html" class="btn-whatsapp-header" id="headerAuthBtn" style="background:linear-gradient(135deg,var(--bleu-electrique),#0052cc);">
                     <i class="fas fa-user"></i>
-                    <span id="headerAuthText">Connexion</span>
+                    <span id="headerAuthText" data-lang="nav_login">Connexion</span>
                 </a>
             </div>
             <button class="menu-toggle" id="menuToggle" aria-label="Menu">
@@ -1843,9 +1853,15 @@ ul {
 
     </script>
 
+    <!-- Language Toggle Button -->
+    <button id="langToggleBtn" onclick="Lang.toggle()" style="position:fixed;bottom:25px;left:25px;z-index:9999;background:linear-gradient(135deg,var(--bleu-electrique),#0052cc);color:#fff;border:none;padding:12px 20px;border-radius:50px;font-family:'Poppins',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;box-shadow:0 5px 20px rgba(0,102,255,0.3);display:flex;align-items:center;gap:8px;transition:all 0.3s ease;">
+        <i class="fas fa-language"></i> عربي
+    </button>
+
     <!-- Database & Auth -->
     <script src="db.js"></script>
     <script src="db-clients.js"></script>
+    <script src="lang.js"></script>
     <script>
     'use strict';
 
@@ -1951,6 +1967,7 @@ ul {
             authBtn.style.background = 'linear-gradient(135deg, var(--orange), #e07800)';
         }
     })();
+    Lang.init();
     </script>
 </body>
 </html>

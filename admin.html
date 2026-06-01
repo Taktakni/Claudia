@@ -264,7 +264,7 @@ input,select,textarea { font-family:inherit; }
                     <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
                     <h1 id="pageTitle">Tableau de bord</h1>
                 </div>
-                <div style="font-size:0.85rem;color:#888;"><i class="fas fa-user-shield"></i> Administrateur</div>
+                <div style="display:flex;align-items:center;gap:15px;"><a href="index.html" target="_blank" style="background:linear-gradient(135deg,var(--orange),#e07800);color:#fff;padding:8px 18px;border-radius:8px;font-size:0.82rem;font-weight:600;display:flex;align-items:center;gap:6px;text-decoration:none;"><i class="fas fa-external-link-alt"></i> Aller au Site</a><span style="font-size:0.85rem;color:#888;"><i class="fas fa-user-shield"></i> Admin</span></div>
             </div>
 
 
@@ -594,9 +594,15 @@ input,select,textarea { font-family:inherit; }
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>URL *</label>
-                    <input type="url" id="galUrl" placeholder="https://..." required>
-                </div>
+    <label>Image/Vidéo (URL ou Fichier)</label>
+    <input type="url" id="galUrl" placeholder="https://... (ou utilisez Parcourir)">
+    <div style="margin-top:8px;display:flex;align-items:center;gap:10px;">
+        <label for="galFile" style="background:linear-gradient(135deg,var(--orange),#e07800);color:#fff;padding:8px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;"><i class="fas fa-upload"></i> Parcourir</label>
+        <input type="file" id="galFile" accept="image/*,video/*" style="display:none;" onchange="handleFileUpload(this,'galUrl','galPreview')">
+        <span id="galFileName" style="font-size:0.78rem;color:#888;"></span>
+    </div>
+    <img id="galPreview" style="display:none;margin-top:10px;max-width:100%;max-height:120px;border-radius:8px;object-fit:cover;">
+</div>
                 <div class="form-group">
                     <label>Légende</label>
                     <input type="text" id="galCaption" placeholder="Description du média">
@@ -635,7 +641,7 @@ input,select,textarea { font-family:inherit; }
                     <div class="form-group"><label>Catégorie</label><select id="productCategory"><option>Produits</option><option>Accessoires</option></select></div>
                     <div class="form-group"><label>Stock *</label><input type="number" id="productStock" value="10" required></div>
                 </div>
-                <div class="form-group"><label>URL Image</label><input type="url" id="productImage" placeholder="https://..."></div>
+                <div class="form-group"><label>Image du produit</label><input type="url" id="productImage" placeholder="https://... (ou Parcourir)"><div style="margin-top:8px;display:flex;align-items:center;gap:10px;"><label for="productFile" style="background:linear-gradient(135deg,var(--orange),#e07800);color:#fff;padding:8px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;"><i class="fas fa-upload"></i> Parcourir</label><input type="file" id="productFile" accept="image/*" style="display:none;" onchange="handleFileUpload(this,'productImage','productPreview')"><span id="productFileName" style="font-size:0.78rem;color:#888;"></span></div><img id="productPreview" style="display:none;margin-top:10px;max-width:100%;max-height:120px;border-radius:8px;object-fit:cover;"></div>
                 <div class="form-group"><label>Description</label><textarea id="productDescription" placeholder="Description du produit"></textarea></div>
                 <div class="modal-actions"><button type="button" class="btn-modal-cancel" onclick="closeModal('Product')">Annuler</button><button type="submit" class="btn-modal-save">Enregistrer</button></div>
             </form>
@@ -1240,6 +1246,30 @@ input,select,textarea { font-family:inherit; }
             row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
         });
     });
+
+    // File Upload Handler
+    function handleFileUpload(input, urlFieldId, previewId) {
+        const file = input.files[0];
+        if (!file) return;
+        
+        // Show filename
+        const nameSpan = input.previousElementSibling || document.getElementById(input.id.replace('File','FileName'));
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById(urlFieldId).value = e.target.result;
+            const preview = document.getElementById(previewId);
+            if (preview) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+        };
+        reader.readAsDataURL(file);
+        
+        // Update filename display
+        const fileNameEl = document.getElementById(input.id.replace('File','FileName'));
+        if (fileNameEl) fileNameEl.textContent = file.name;
+    }
 
     </script>
 </body>
