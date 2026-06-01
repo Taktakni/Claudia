@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-
 :root {
     --bleu-fonce: #071B3B;
     --bleu-electrique: #0066FF;
@@ -29,6 +28,7 @@ a { text-decoration:none; color:inherit; }
 ul { list-style:none; }
 button { cursor:pointer; font-family:inherit; }
 input,select,textarea { font-family:inherit; }
+
 
 /* LOGIN */
 .login-page { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--bleu-fonce),#0a2a5e); padding:20px; }
@@ -86,6 +86,7 @@ input,select,textarea { font-family:inherit; }
 .stat-card .stat-value { font-size:1.8rem; font-weight:800; color:var(--bleu-fonce); display:block; }
 .stat-card .stat-label { font-size:0.85rem; color:#888; font-weight:500; }
 
+
 /* TABLE */
 .table-container { background:var(--blanc); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; margin-bottom:30px; }
 .table-header { display:flex; align-items:center; justify-content:space-between; padding:20px 25px; border-bottom:1px solid var(--gris-border); flex-wrap:wrap; gap:15px; }
@@ -104,7 +105,7 @@ input,select,textarea { font-family:inherit; }
 .badge-confirmed { background:rgba(0,102,255,0.1); color:var(--bleu-electrique); }
 .badge-completed { background:rgba(37,211,102,0.1); color:var(--vert); }
 .badge-cancelled { background:rgba(255,71,87,0.1); color:var(--rouge); }
-.action-btns { display:flex; gap:8px; }
+.action-btns { display:flex; gap:8px; flex-wrap:wrap; }
 .btn-icon { width:32px; height:32px; border-radius:8px; border:none; display:flex; align-items:center; justify-content:center; font-size:0.8rem; transition:var(--transition); }
 .btn-icon.view { background:rgba(0,102,255,0.1); color:var(--bleu-electrique); }
 .btn-icon.edit { background:rgba(255,140,0,0.1); color:var(--orange); }
@@ -134,6 +135,7 @@ input,select,textarea { font-family:inherit; }
 .btn-modal-save { padding:11px 22px; background:linear-gradient(135deg,var(--bleu-electrique),#0052cc); color:var(--blanc); border:none; border-radius:10px; font-size:0.88rem; font-weight:600; transition:var(--transition); }
 .btn-modal-save:hover { transform:translateY(-2px); box-shadow:var(--shadow-hover); }
 
+
 /* PAGES */
 .page-section { display:none; }
 .page-section.active { display:block; }
@@ -159,6 +161,38 @@ input,select,textarea { font-family:inherit; }
 .activity-info p { font-size:0.85rem; font-weight:500; color:var(--bleu-fonce); }
 .activity-info span { font-size:0.75rem; color:#999; }
 
+
+/* GALLERY GRID */
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; padding:20px; }
+.gallery-item { position:relative; border-radius:12px; overflow:hidden; box-shadow:var(--shadow); transition:var(--transition); }
+.gallery-item:hover { transform:translateY(-3px); box-shadow:var(--shadow-hover); }
+.gallery-item img, .gallery-item iframe { width:100%; height:160px; object-fit:cover; display:block; }
+.gallery-item .gallery-caption { padding:10px 12px; font-size:0.82rem; font-weight:500; color:var(--bleu-fonce); background:var(--blanc); }
+.gallery-item .gallery-delete { position:absolute; top:8px; right:8px; width:28px; height:28px; border-radius:50%; background:var(--rouge); color:var(--blanc); border:none; font-size:0.75rem; display:flex; align-items:center; justify-content:center; opacity:0; transition:var(--transition); }
+.gallery-item:hover .gallery-delete { opacity:1; }
+
+/* REVIEW CARD */
+.review-card { background:var(--blanc); border-radius:12px; padding:20px; box-shadow:var(--shadow); margin-bottom:15px; transition:var(--transition); border-left:4px solid var(--vert); }
+.review-card.pending { border-left-color:var(--orange); background:rgba(255,140,0,0.03); }
+.review-card .review-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.review-card .review-name { font-weight:700; font-size:0.95rem; }
+.review-card .review-date { font-size:0.75rem; color:#999; }
+.review-card .review-text { font-size:0.88rem; color:#555; margin-bottom:12px; line-height:1.5; }
+.review-card .review-stars { color:var(--orange); margin-bottom:10px; }
+.review-card .review-actions { display:flex; gap:8px; }
+.review-card .review-actions button { padding:6px 14px; border:none; border-radius:8px; font-size:0.78rem; font-weight:600; transition:var(--transition); }
+.review-card .review-actions .btn-approve { background:rgba(37,211,102,0.1); color:var(--vert); }
+.review-card .review-actions .btn-reject { background:rgba(255,140,0,0.1); color:var(--orange); }
+.review-card .review-actions .btn-del { background:rgba(255,71,87,0.1); color:var(--rouge); }
+.review-card .review-actions button:hover { transform:translateY(-1px); }
+
+/* HOMEPAGE FORM */
+.homepage-form { padding:25px; }
+.homepage-form .form-section { margin-bottom:25px; padding-bottom:20px; border-bottom:1px solid var(--gris-border); }
+.homepage-form .form-section:last-child { border-bottom:none; }
+.homepage-form .form-section h4 { font-size:0.95rem; font-weight:700; margin-bottom:15px; color:var(--bleu-electrique); }
+
+
 /* RESPONSIVE */
 @media(max-width:992px){
     .sidebar{transform:translateX(-100%)} .sidebar.active{transform:translateX(0)}
@@ -167,13 +201,12 @@ input,select,textarea { font-family:inherit; }
 @media(max-width:768px){
     .stats-cards{grid-template-columns:repeat(2,1fr)} .data-table{font-size:0.8rem}
     .data-table th,.data-table td{padding:10px 12px} .table-header{flex-direction:column;align-items:stretch}
-    .charts-grid{grid-template-columns:1fr}
+    .charts-grid{grid-template-columns:1fr} .gallery-grid{grid-template-columns:repeat(2,1fr)}
 }
-@media(max-width:480px){ .stats-cards{grid-template-columns:1fr} .main-content{padding:15px} .modal{padding:25px 20px} }
+@media(max-width:480px){ .stats-cards{grid-template-columns:1fr} .main-content{padding:15px} .modal{padding:25px 20px} .gallery-grid{grid-template-columns:1fr} }
     </style>
 </head>
 <body>
-
 
     <!-- LOGIN PAGE -->
     <div class="login-page" id="loginPage">
@@ -186,15 +219,16 @@ input,select,textarea { font-family:inherit; }
             <form class="login-form" id="loginForm">
                 <div class="form-group">
                     <label for="loginPass">Mot de passe</label>
-                    <input type="password" id="loginPass" placeholder="••••••••" required>
+                    <input type="password" id="loginPass" placeholder="Entrez le mot de passe" required>
                 </div>
                 <button type="submit" class="login-btn">
                     <i class="fas fa-lock"></i> Se Connecter
                 </button>
-                <p class="login-error" id="loginError">Mot de passe incorrect. Réessayez.</p>
+                <p class="login-error" id="loginError">Mot de passe incorrect. Rééssayez.</p>
             </form>
         </div>
     </div>
+
 
     <!-- ADMIN LAYOUT -->
     <div class="admin-layout" id="adminLayout">
@@ -204,8 +238,12 @@ input,select,textarea { font-family:inherit; }
             <ul class="sidebar-menu">
                 <li><a href="#" class="active" data-page="dashboard"><i class="fas fa-th-large"></i> Tableau de bord</a></li>
                 <li><a href="#" data-page="appointments"><i class="fas fa-calendar-alt"></i> Rendez-vous</a></li>
-                <li><a href="#" data-page="clients"><i class="fas fa-users"></i> Clients</a></li>
+                <li><a href="#" data-page="clients"><i class="fas fa-users"></i> Clients RDV</a></li>
+                <li><a href="#" data-page="registered"><i class="fas fa-user-check"></i> Clients Inscrits</a></li>
                 <li><a href="#" data-page="services"><i class="fas fa-car-side"></i> Services</a></li>
+                <li><a href="#" data-page="reviews"><i class="fas fa-comments"></i> Avis / Commentaires</a></li>
+                <li><a href="#" data-page="gallery"><i class="fas fa-images"></i> Galerie & Médias</a></li>
+                <li><a href="#" data-page="homepage"><i class="fas fa-home"></i> Page d'Accueil</a></li>
                 <li><a href="#" data-page="stats"><i class="fas fa-chart-bar"></i> Statistiques</a></li>
             </ul>
             <div class="sidebar-divider"></div>
@@ -247,6 +285,7 @@ input,select,textarea { font-family:inherit; }
                 </div>
             </div>
 
+
             <!-- PAGE: RENDEZ-VOUS -->
             <div class="page-section" id="page-appointments">
                 <div class="stats-cards">
@@ -267,18 +306,29 @@ input,select,textarea { font-family:inherit; }
                 </div>
             </div>
 
-
-            <!-- PAGE: CLIENTS -->
+            <!-- PAGE: CLIENTS RDV -->
             <div class="page-section" id="page-clients">
                 <div class="table-container">
                     <div class="table-header">
-                        <h3>Liste des clients</h3>
+                        <h3>Clients (via Rendez-vous)</h3>
                         <div style="display:flex;gap:10px;flex-wrap:wrap;">
                             <div class="table-search"><input type="text" id="searchClient" placeholder="Rechercher un client..."></div>
                             <button class="btn-add" onclick="openModal('client')"><i class="fas fa-plus"></i> Nouveau Client</button>
                         </div>
                     </div>
                     <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>#</th><th>Nom</th><th>Téléphone</th><th>Email</th><th>Véhicule</th><th>Visites</th><th>Actions</th></tr></thead><tbody id="clientsTable"></tbody></table></div>
+                </div>
+            </div>
+
+
+            <!-- PAGE: CLIENTS INSCRITS -->
+            <div class="page-section" id="page-registered">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Clients Inscrits (via Inscription)</h3>
+                        <div class="table-search"><input type="text" id="searchRegistered" placeholder="Rechercher..."></div>
+                    </div>
+                    <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>#</th><th>Nom</th><th>Prénom</th><th>Téléphone</th><th>Email</th><th>Véhicule</th><th>Inscrit le</th><th>Points</th><th>Actions</th></tr></thead><tbody id="registeredTable"></tbody></table></div>
                 </div>
             </div>
 
@@ -292,6 +342,72 @@ input,select,textarea { font-family:inherit; }
                     <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>#</th><th>Service</th><th>Prix</th><th>Durée</th><th>Catégorie</th><th>Actions</th></tr></thead><tbody id="servicesTable"></tbody></table></div>
                 </div>
             </div>
+
+
+            <!-- PAGE: AVIS / COMMENTAIRES -->
+            <div class="page-section" id="page-reviews">
+                <div class="stats-cards">
+                    <div class="stat-card blue"><div class="stat-header"><div><span class="stat-value" id="reviewTotal">0</span><span class="stat-label">Total Avis</span></div><div class="stat-icon"><i class="fas fa-comments"></i></div></div></div>
+                    <div class="stat-card green"><div class="stat-header"><div><span class="stat-value" id="reviewApproved">0</span><span class="stat-label">Approuvés</span></div><div class="stat-icon"><i class="fas fa-check"></i></div></div></div>
+                    <div class="stat-card orange"><div class="stat-header"><div><span class="stat-value" id="reviewPending">0</span><span class="stat-label">En attente</span></div><div class="stat-icon"><i class="fas fa-clock"></i></div></div></div>
+                </div>
+                <div id="reviewsList"></div>
+            </div>
+
+            <!-- PAGE: GALERIE & MÉDIAS -->
+            <div class="page-section" id="page-gallery">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Galerie & Médias</h3>
+                        <button class="btn-add" onclick="openModal('gallery')"><i class="fas fa-plus"></i> Ajouter un média</button>
+                    </div>
+                    <div class="gallery-grid" id="galleryGrid"></div>
+                </div>
+            </div>
+
+
+            <!-- PAGE: PAGE D'ACCUEIL -->
+            <div class="page-section" id="page-homepage">
+                <div class="table-container">
+                    <div class="table-header"><h3>Gestion du contenu - Page d'Accueil</h3></div>
+                    <form class="homepage-form modal-form" id="homepageForm">
+                        <div class="form-section">
+                            <h4><i class="fas fa-image"></i> Section Hero</h4>
+                            <div class="form-row">
+                                <div class="form-group"><label>Titre Principal</label><input type="text" id="hpHeroTitle"></div>
+                                <div class="form-group"><label>Sous-titre</label><input type="text" id="hpHeroSubtitle"></div>
+                            </div>
+                            <div class="form-group"><label>Offre (bandeau)</label><input type="text" id="hpHeroOffer"></div>
+                        </div>
+                        <div class="form-section">
+                            <h4><i class="fas fa-crown"></i> Section VIP</h4>
+                            <div class="form-row">
+                                <div class="form-group"><label>Titre VIP</label><input type="text" id="hpVipTitle"></div>
+                                <div class="form-group"><label>Offre VIP</label><input type="text" id="hpVipOffer"></div>
+                            </div>
+                            <div class="form-group"><label>Bonus VIP (séparés par des virgules)</label><input type="text" id="hpVipBonus" placeholder="Parfum offert, Nettoyage tapis, ..."></div>
+                        </div>
+                        <div class="form-section">
+                            <h4><i class="fas fa-chart-line"></i> Statistiques affichées</h4>
+                            <div class="form-row">
+                                <div class="form-group"><label>Nombre Clients</label><input type="number" id="hpStatClients"></div>
+                                <div class="form-group"><label>Nombre Lavages</label><input type="number" id="hpStatLavages"></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group"><label>Note (/5)</label><input type="number" id="hpStatNote" min="1" max="5"></div>
+                                <div class="form-group"><label>Satisfaction (%)</label><input type="number" id="hpStatSatisfaction" min="0" max="100"></div>
+                            </div>
+                        </div>
+                        <div class="form-section">
+                            <h4><i class="fas fa-bullhorn"></i> Section CTA (Appel à l'action)</h4>
+                            <div class="form-group"><label>Titre CTA</label><input type="text" id="hpCtaTitle"></div>
+                            <div class="form-group"><label>Texte CTA</label><textarea id="hpCtaText"></textarea></div>
+                        </div>
+                        <button type="submit" class="btn-modal-save" style="width:100%;"><i class="fas fa-save"></i> Enregistrer les modifications</button>
+                    </form>
+                </div>
+            </div>
+
 
             <!-- PAGE: STATISTIQUES -->
             <div class="page-section" id="page-stats">
@@ -317,7 +433,7 @@ input,select,textarea { font-family:inherit; }
                         </div>
                         <div class="form-row">
                             <div class="form-group"><label>Horaires</label><input type="text" id="settingsHours" value="08h00 - 20h00"></div>
-                            <div class="form-group"><label>Adresse</label><input type="text" id="settingsAddress" value="Sidi Bel Abbès – Montplaisir"></div>
+                            <div class="form-group"><label>Adresse</label><input type="text" id="settingsAddress" value="Sidi Bel Abbès - Montplaisir"></div>
                         </div>
                         <button type="submit" class="btn-modal-save" style="margin-top:20px;"><i class="fas fa-save"></i> Enregistrer</button>
                     </form>
@@ -359,6 +475,7 @@ input,select,textarea { font-family:inherit; }
         </div>
     </div>
 
+
     <!-- Modal: Nouveau Client -->
     <div class="modal-overlay" id="modalClient">
         <div class="modal">
@@ -396,8 +513,35 @@ input,select,textarea { font-family:inherit; }
     </div>
 
 
+    <!-- Modal: Nouveau Média -->
+    <div class="modal-overlay" id="modalGallery">
+        <div class="modal">
+            <div class="modal-header"><h3><i class="fas fa-image"></i> Ajouter un Média</h3><button class="modal-close" onclick="closeModal('Gallery')">&times;</button></div>
+            <form class="modal-form" id="formGallery">
+                <div class="form-group">
+                    <label>Type *</label>
+                    <select id="galType">
+                        <option value="image">Image</option>
+                        <option value="video">Vidéo (YouTube embed)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>URL *</label>
+                    <input type="url" id="galUrl" placeholder="https://..." required>
+                </div>
+                <div class="form-group">
+                    <label>Légende</label>
+                    <input type="text" id="galCaption" placeholder="Description du média">
+                </div>
+                <div class="modal-actions"><button type="button" class="btn-modal-cancel" onclick="closeModal('Gallery')">Annuler</button><button type="submit" class="btn-modal-save">Ajouter</button></div>
+            </form>
+        </div>
+    </div>
+
     <!-- DATABASE -->
     <script src="db.js"></script>
+    <script src="db-clients.js"></script>
+
 
     <!-- ADMIN LOGIC -->
     <script>
@@ -428,6 +572,7 @@ input,select,textarea { font-family:inherit; }
         loginPage.style.display = 'none';
         adminLayout.classList.add('active');
         loadServiceOptions();
+        loadHomepageForm();
         refreshAll();
     }
 
@@ -437,11 +582,16 @@ input,select,textarea { font-family:inherit; }
         location.reload();
     });
 
+
     // ================================== //
     // NAVIGATION                         //
     // ================================== //
     const sidebarLinks = document.querySelectorAll('.sidebar-menu a[data-page]');
-    const pageTitles = { dashboard:'Tableau de bord', appointments:'Rendez-vous', clients:'Clients', services:'Services', stats:'Statistiques', settings:'Paramètres' };
+    const pageTitles = {
+        dashboard:'Tableau de bord', appointments:'Rendez-vous', clients:'Clients RDV',
+        registered:'Clients Inscrits', services:'Services', reviews:'Avis / Commentaires',
+        gallery:'Galerie & Médias', homepage:"Page d'Accueil", stats:'Statistiques', settings:'Paramètres'
+    };
 
     sidebarLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -471,7 +621,6 @@ input,select,textarea { font-family:inherit; }
         ov.addEventListener('click', (e) => { if (e.target === ov) ov.classList.remove('active'); });
     });
 
-    // Load service options in appointment modal
     function loadServiceOptions() {
         const select = document.getElementById('apptService');
         select.innerHTML = '<option value="">--</option>';
@@ -499,7 +648,6 @@ input,select,textarea { font-family:inherit; }
             time: document.getElementById('apptTime').value,
             message: document.getElementById('apptNotes').value.trim()
         });
-        // Update status if not pending
         const status = document.getElementById('apptStatus').value;
         if (status !== 'pending') {
             const appts = MontplaisirDB.getAllAppointments();
@@ -539,30 +687,99 @@ input,select,textarea { font-family:inherit; }
         refreshAll();
     });
 
+
+    // Nouveau Média (Galerie)
+    document.getElementById('formGallery').addEventListener('submit', (e) => {
+        e.preventDefault();
+        MontplaisirDB.addGalleryItem({
+            type: document.getElementById('galType').value,
+            url: document.getElementById('galUrl').value.trim(),
+            caption: document.getElementById('galCaption').value.trim()
+        });
+        closeModal('Gallery');
+        e.target.reset();
+        refreshAll();
+    });
+
+    // Homepage form
+    document.getElementById('homepageForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const bonusStr = document.getElementById('hpVipBonus').value;
+        const bonusArr = bonusStr.split(',').map(s => s.trim()).filter(s => s);
+        MontplaisirDB.updateHomepage({
+            heroTitle: document.getElementById('hpHeroTitle').value.trim(),
+            heroSubtitle: document.getElementById('hpHeroSubtitle').value.trim(),
+            heroOffer: document.getElementById('hpHeroOffer').value.trim(),
+            vipTitle: document.getElementById('hpVipTitle').value.trim(),
+            vipOffer: document.getElementById('hpVipOffer').value.trim(),
+            vipBonus: bonusArr,
+            statClients: parseInt(document.getElementById('hpStatClients').value) || 0,
+            statLavages: parseInt(document.getElementById('hpStatLavages').value) || 0,
+            statNote: parseInt(document.getElementById('hpStatNote').value) || 5,
+            statSatisfaction: parseInt(document.getElementById('hpStatSatisfaction').value) || 0,
+            ctaTitle: document.getElementById('hpCtaTitle').value.trim(),
+            ctaText: document.getElementById('hpCtaText').value.trim()
+        });
+        alert('Contenu de la page d\'accueil mis à jour !');
+    });
+
+    function loadHomepageForm() {
+        const hp = MontplaisirDB.getHomepage();
+        document.getElementById('hpHeroTitle').value = hp.heroTitle || '';
+        document.getElementById('hpHeroSubtitle').value = hp.heroSubtitle || '';
+        document.getElementById('hpHeroOffer').value = hp.heroOffer || '';
+        document.getElementById('hpVipTitle').value = hp.vipTitle || '';
+        document.getElementById('hpVipOffer').value = hp.vipOffer || '';
+        document.getElementById('hpVipBonus').value = (hp.vipBonus || []).join(', ');
+        document.getElementById('hpStatClients').value = hp.statClients || 0;
+        document.getElementById('hpStatLavages').value = hp.statLavages || 0;
+        document.getElementById('hpStatNote').value = hp.statNote || 5;
+        document.getElementById('hpStatSatisfaction').value = hp.statSatisfaction || 0;
+        document.getElementById('hpCtaTitle').value = hp.ctaTitle || '';
+        document.getElementById('hpCtaText').value = hp.ctaText || '';
+    }
+
     // Settings
     document.getElementById('settingsForm').addEventListener('submit', (e) => {
         e.preventDefault();
         alert('Paramètres enregistrés !');
     });
 
-    // Action functions
+
+    // ================================== //
+    // ACTION FUNCTIONS                   //
+    // ================================== //
     function confirmAppt(id) { MontplaisirDB.updateAppointmentStatus(id, 'confirmed'); refreshAll(); }
     function completeAppt(id) { MontplaisirDB.updateAppointmentStatus(id, 'completed'); refreshAll(); }
     function cancelAppt(id) { MontplaisirDB.updateAppointmentStatus(id, 'cancelled'); refreshAll(); }
     function deleteAppt(id) { if(confirm('Supprimer ce rendez-vous ?')){ MontplaisirDB.deleteAppointment(id); refreshAll(); } }
     function deleteClient(id) { if(confirm('Supprimer ce client ?')){ MontplaisirDB.deleteClient(id); refreshAll(); } }
     function deleteService(id) { if(confirm('Supprimer ce service ?')){ MontplaisirDB.deleteService(id); loadServiceOptions(); refreshAll(); } }
-
+    function deleteRegistered(id) { if(confirm('Supprimer cet utilisateur inscrit ?')){ ClientsDB.deleteUser(id); refreshAll(); } }
+    function approveReview(id) { MontplaisirDB.approveReview(id); refreshAll(); }
+    function rejectReview(id) { MontplaisirDB.rejectReview(id); refreshAll(); }
+    function deleteReview(id) { if(confirm('Supprimer cet avis ?')){ MontplaisirDB.deleteReview(id); refreshAll(); } }
+    function deleteGalleryItem(id) { if(confirm('Supprimer ce média ?')){ MontplaisirDB.deleteGalleryItem(id); refreshAll(); } }
 
     // ================================== //
     // RENDER FUNCTIONS                   //
     // ================================== //
-    function refreshAll() { renderDashboard(); renderAppointments(); renderClients(); renderServices(); renderStats(); }
+    function refreshAll() {
+        renderDashboard();
+        renderAppointments();
+        renderClients();
+        renderRegistered();
+        renderServices();
+        renderReviews();
+        renderGallery();
+        renderStats();
+    }
 
     function getBadge(status) {
         const labels = { pending:'En attente', confirmed:'Confirmé', completed:'Terminé', cancelled:'Annulé' };
         return `<span class="badge badge-${status}">${labels[status]||status}</span>`;
     }
+
 
     function renderDashboard() {
         const stats = MontplaisirDB.getStats();
@@ -571,7 +788,6 @@ input,select,textarea { font-family:inherit; }
         document.getElementById('completedRdv').textContent = stats.completed;
         document.getElementById('totalClients').textContent = stats.totalClients;
 
-        // Dashboard table (5 derniers)
         const appts = MontplaisirDB.getAllAppointments().slice(0, 5);
         document.getElementById('dashboardTable').innerHTML = appts.map(a => `
             <tr>
@@ -598,6 +814,7 @@ input,select,textarea { font-family:inherit; }
             return `<li class="activity-item"><div class="activity-icon ${cls}"><i class="fas ${ico}"></i></div><div class="activity-info"><p>${a.name} - ${a.service}</p><span>${a.date} à ${a.time}</span></div></li>`;
         }).join('');
     }
+
 
     function renderAppointments() {
         const appts = MontplaisirDB.getAllAppointments();
@@ -630,6 +847,25 @@ input,select,textarea { font-family:inherit; }
             </tr>`).join('');
     }
 
+
+    function renderRegistered() {
+        const users = ClientsDB.getAllUsers();
+        document.getElementById('registeredTable').innerHTML = users.map((u,i) => {
+            const dateStr = u.createdAt ? new Date(u.createdAt).toLocaleDateString('fr-FR') : '-';
+            return `<tr>
+                <td>${i+1}</td>
+                <td><strong>${u.lastName || '-'}</strong></td>
+                <td>${u.firstName || '-'}</td>
+                <td>${u.phone || '-'}</td>
+                <td>${u.email || '-'}</td>
+                <td>${u.car || '-'} ${u.carType ? '('+u.carType+')' : ''}</td>
+                <td>${dateStr}</td>
+                <td><span class="badge badge-confirmed">${u.loyaltyPoints || 0}</span></td>
+                <td><div class="action-btns"><button class="btn-icon delete" title="Supprimer" onclick="deleteRegistered('${u.id}')"><i class="fas fa-trash"></i></button></div></td>
+            </tr>`;
+        }).join('');
+    }
+
     function renderServices() {
         const services = MontplaisirDB.getAllServices();
         document.getElementById('servicesTable').innerHTML = services.map((s,i) => `
@@ -641,13 +877,62 @@ input,select,textarea { font-family:inherit; }
     }
 
 
+    function renderReviews() {
+        const reviews = MontplaisirDB.getAllReviews();
+        const approved = reviews.filter(r => r.approved);
+        const pending = reviews.filter(r => !r.approved);
+
+        document.getElementById('reviewTotal').textContent = reviews.length;
+        document.getElementById('reviewApproved').textContent = approved.length;
+        document.getElementById('reviewPending').textContent = pending.length;
+
+        document.getElementById('reviewsList').innerHTML = reviews.map(r => {
+            const stars = '<i class="fas fa-star"></i>'.repeat(r.rating) + '<i class="far fa-star"></i>'.repeat(5 - r.rating);
+            const pendingClass = r.approved ? '' : ' pending';
+            const statusBadge = r.approved 
+                ? '<span class="badge badge-completed">Approuvé</span>' 
+                : '<span class="badge badge-pending">En attente</span>';
+            return `<div class="review-card${pendingClass}">
+                <div class="review-header">
+                    <div>
+                        <span class="review-name">${r.name}</span> ${statusBadge}
+                    </div>
+                    <span class="review-date">${r.date}</span>
+                </div>
+                <div class="review-stars">${stars}</div>
+                <p class="review-text">${r.text}</p>
+                <div class="review-actions">
+                    ${!r.approved ? `<button class="btn-approve" onclick="approveReview('${r.id}')"><i class="fas fa-check"></i> Approuver</button>` : `<button class="btn-reject" onclick="rejectReview('${r.id}')"><i class="fas fa-ban"></i> Rejeter</button>`}
+                    <button class="btn-del" onclick="deleteReview('${r.id}')"><i class="fas fa-trash"></i> Supprimer</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+
+    function renderGallery() {
+        const gallery = MontplaisirDB.getAllGallery();
+        document.getElementById('galleryGrid').innerHTML = gallery.map(g => {
+            let mediaHtml = '';
+            if (g.type === 'video') {
+                mediaHtml = `<iframe src="${g.url}" frameborder="0" allowfullscreen></iframe>`;
+            } else {
+                mediaHtml = `<img src="${g.url}" alt="${g.caption}" onerror="this.src='https://via.placeholder.com/300x160?text=Image'">`;
+            }
+            return `<div class="gallery-item">
+                <button class="gallery-delete" onclick="deleteGalleryItem('${g.id}')" title="Supprimer"><i class="fas fa-trash"></i></button>
+                ${mediaHtml}
+                <div class="gallery-caption">${g.caption || 'Sans légende'}</div>
+            </div>`;
+        }).join('');
+    }
+
     function renderStats() {
         const stats = MontplaisirDB.getStats();
         document.getElementById('statsRevenue').textContent = stats.revenue.toLocaleString() + ' DA';
         document.getElementById('statsAvg').textContent = stats.avgPerDay;
         document.getElementById('statsPopular').textContent = stats.popularService;
 
-        // Service chart
         const entries = Object.entries(stats.serviceCounts);
         const maxSvc = Math.max(...entries.map(e=>e[1]), 1);
         document.getElementById('serviceChart').innerHTML = entries.slice(0,6).map(([name,count]) => `
@@ -655,7 +940,6 @@ input,select,textarea { font-family:inherit; }
                 <span class="bar-value">${count}</span><span class="bar-label">${name.split(' ')[0]}</span>
             </div>`).join('');
 
-        // Monthly chart
         const months = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
         const mc = new Array(12).fill(0);
         MontplaisirDB.getAllAppointments().forEach(a => { const m=new Date(a.date).getMonth(); if(!isNaN(m)) mc[m]++; });
@@ -663,6 +947,7 @@ input,select,textarea { font-family:inherit; }
         document.getElementById('monthlyChart').innerHTML = mc.map((v,i) => `
             <div class="bar" style="height:${(v/maxM)*160}px"><span class="bar-value">${v}</span><span class="bar-label">${months[i]}</span></div>`).join('');
     }
+
 
     // ================================== //
     // SEARCH & FILTER                    //
@@ -694,6 +979,13 @@ input,select,textarea { font-family:inherit; }
     document.getElementById('searchClient').addEventListener('input', (e) => {
         const q = e.target.value.toLowerCase();
         document.querySelectorAll('#clientsTable tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+    });
+
+    document.getElementById('searchRegistered').addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase();
+        document.querySelectorAll('#registeredTable tr').forEach(row => {
             row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
         });
     });

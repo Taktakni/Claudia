@@ -165,6 +165,44 @@ const MontplaisirDB = {
                 { id: 'svc006', name: 'Nettoyage Moteur', price: 800, duration: 40, category: 'Nettoyage' }
             ]);
         }
+
+        if (!this.get('reviews')) {
+            this.set('reviews', [
+                { id: 'rev001', name: 'Ahmed B.', text: 'Service exceptionnel. Voiture impeccable. Je recommande à 100% !', rating: 5, approved: true, date: '2026-05-20' },
+                { id: 'rev002', name: 'Karim M.', text: 'Très rapide et professionnel. Mon véhicule n\'a jamais été aussi propre.', rating: 5, approved: true, date: '2026-05-22' },
+                { id: 'rev003', name: 'Youcef L.', text: 'Meilleur lavage de Sidi Bel Abbès. Produits de qualité et équipe au top !', rating: 5, approved: true, date: '2026-05-25' },
+                { id: 'rev004', name: 'Mohamed S.', text: 'Rapport qualité-prix imbattable. L\'offre VIP est vraiment avantageuse.', rating: 5, approved: true, date: '2026-05-28' },
+                { id: 'rev005', name: 'Rachid D.', text: 'Accueil chaleureux, travail soigné. Ma voiture brille comme neuve !', rating: 5, approved: true, date: '2026-05-30' }
+            ]);
+        }
+
+        if (!this.get('gallery')) {
+            this.set('gallery', [
+                { id: 'gal001', type: 'image', url: 'https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=600&q=80', caption: 'Lavage Extérieur Premium' },
+                { id: 'gal002', type: 'image', url: 'https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=600&q=80', caption: 'Nettoyage Intérieur Complet' },
+                { id: 'gal003', type: 'image', url: 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=600&q=80', caption: 'Résultat Brillant' },
+                { id: 'gal004', type: 'image', url: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&q=80', caption: 'Finition Parfaite' },
+                { id: 'gal005', type: 'image', url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80', caption: 'Polissage Carrosserie' },
+                { id: 'gal006', type: 'image', url: 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=600&q=80', caption: 'Lavage Complet' }
+            ]);
+        }
+
+        if (!this.get('homepage')) {
+            this.set('homepage', {
+                heroTitle: 'LE LAVAGE AUTOMOBILE',
+                heroSubtitle: 'NOUVELLE GÉNÉRATION',
+                heroOffer: '2 LAVAGES ACHETÉS = 1 LAVAGE GRATUIT',
+                vipTitle: 'OFFRE VIP MONTPLAISIR',
+                vipOffer: '2 Lavages achetés = 3ème lavage GRATUIT',
+                vipBonus: ['Parfum intérieur offert', 'Nettoyage tapis', 'Aspiration complète', 'Nettoyage des jantes'],
+                statClients: 500,
+                statLavages: 1000,
+                statNote: 5,
+                statSatisfaction: 98,
+                ctaTitle: 'Réservez votre lavage maintenant',
+                ctaText: 'Profitez de notre offre VIP et retrouvez un véhicule comme neuf.'
+            });
+        }
     },
 
     // ================================== //
@@ -367,6 +405,88 @@ const MontplaisirDB = {
             popularService: popular ? popular[0] : '-',
             serviceCounts: serviceCounts
         };
+    },
+
+    // ================================== //
+    // AVIS / REVIEWS (CRUD)             //
+    // ================================== //
+
+    getAllReviews() {
+        return this.get('reviews') || [];
+    },
+
+    getApprovedReviews() {
+        return this.getAllReviews().filter(r => r.approved);
+    },
+
+    addReview(data) {
+        const reviews = this.getAllReviews();
+        reviews.push({
+            id: this.generateId(),
+            name: data.name,
+            text: data.text,
+            rating: data.rating || 5,
+            approved: false,
+            date: new Date().toISOString().split('T')[0]
+        });
+        this.set('reviews', reviews);
+    },
+
+    approveReview(id) {
+        const reviews = this.getAllReviews();
+        const review = reviews.find(r => r.id === id);
+        if (review) { review.approved = true; this.set('reviews', reviews); }
+    },
+
+    rejectReview(id) {
+        const reviews = this.getAllReviews();
+        const review = reviews.find(r => r.id === id);
+        if (review) { review.approved = false; this.set('reviews', reviews); }
+    },
+
+    deleteReview(id) {
+        let reviews = this.getAllReviews();
+        reviews = reviews.filter(r => r.id !== id);
+        this.set('reviews', reviews);
+    },
+
+    // ================================== //
+    // GALERIE (CRUD)                    //
+    // ================================== //
+
+    getAllGallery() {
+        return this.get('gallery') || [];
+    },
+
+    addGalleryItem(data) {
+        const gallery = this.getAllGallery();
+        gallery.push({
+            id: this.generateId(),
+            type: data.type || 'image',
+            url: data.url,
+            caption: data.caption || ''
+        });
+        this.set('gallery', gallery);
+    },
+
+    deleteGalleryItem(id) {
+        let gallery = this.getAllGallery();
+        gallery = gallery.filter(g => g.id !== id);
+        this.set('gallery', gallery);
+    },
+
+    // ================================== //
+    // HOMEPAGE CONTENT                  //
+    // ================================== //
+
+    getHomepage() {
+        return this.get('homepage') || {};
+    },
+
+    updateHomepage(data) {
+        const current = this.getHomepage();
+        Object.assign(current, data);
+        this.set('homepage', current);
     },
 
     // ================================== //
