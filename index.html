@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MONTPLAISIR LAVAGE AUTO - Le lavage automobile nouvelle génération à Sidi Bel Abbès. Réservez votre rendez-vous via WhatsApp.">
+    <meta name="description" content="MONTPLAISIR LAVAGE AUTO - Le lavage automobile nouvelle génération à Sidi Bel Abbès. Réservez votre rendez-vous en ligne.">
     <meta name="keywords" content="lavage auto, car wash, Sidi Bel Abbès, Montplaisir, lavage voiture, nettoyage auto">
     <meta name="author" content="Montplaisir Lavage Auto">
     <!-- Open Graph -->
@@ -197,7 +197,7 @@ ul {
 }
 
 .btn-whatsapp-header {
-    background: linear-gradient(135deg, #25D366, #128C7E);
+    background: linear-gradient(135deg, var(--bleu-electrique), #0052cc);
     color: var(--blanc);
     padding: 10px 20px;
     border-radius: 50px;
@@ -213,7 +213,7 @@ ul {
 
 .btn-whatsapp-header:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 8px 25px rgba(0, 102, 255, 0.4);
 }
 
 /* Mobile Menu */
@@ -1062,7 +1062,7 @@ ul {
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    background: linear-gradient(135deg, #25D366, #128C7E);
+    background: linear-gradient(135deg, var(--bleu-electrique), #0052cc);
     color: var(--blanc);
     padding: 20px 50px;
     border-radius: 60px;
@@ -1077,7 +1077,7 @@ ul {
 
 .btn-cta-whatsapp:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 20px 50px rgba(37, 211, 102, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 102, 255, 0.5);
 }
 
 .btn-cta-whatsapp i {
@@ -1269,14 +1269,14 @@ ul {
                 <a href="#hero">Accueil</a>
                 <a href="#services">Services</a>
                 <a href="#vip">Offre VIP</a>
-                <a href="#reservation">Réservation</a>
+                <a href="reservation.html">Réservation</a>
                 <a href="#gallery">Galerie</a>
                 <a href="#reviews">Avis</a>
                 <a href="#contact">Contact</a>
             </nav>
-            <a href="https://wa.me/213771129469" target="_blank" class="btn-whatsapp-header">
-                <i class="fab fa-whatsapp"></i>
-                Réserver sur WhatsApp
+            <a href="reservation.html" class="btn-whatsapp-header">
+                <i class="fas fa-calendar-check"></i>
+                Prendre Rendez-vous
             </a>
             <button class="menu-toggle" id="menuToggle" aria-label="Menu">
                 <i class="fas fa-bars"></i>
@@ -1307,12 +1307,12 @@ ul {
                 </div>
             </div>
             <div class="hero-buttons">
-                <a href="#reservation" class="btn-primary">
+                <a href="reservation.html" class="btn-primary">
                     <i class="fas fa-calendar-check"></i>
                     Réserver Maintenant
                 </a>
-                <a href="https://wa.me/213771129469" target="_blank" class="btn-secondary">
-                    <i class="fab fa-whatsapp"></i>
+                <a href="#contact" class="btn-secondary">
+                    <i class="fas fa-phone"></i>
                     Nous Contacter
                 </a>
             </div>
@@ -1372,8 +1372,8 @@ ul {
                 <div class="service-card animate-on-scroll">
                     <div class="icon"><i class="fas fa-calendar-alt"></i></div>
                     <h3>📅 Réservation Express</h3>
-                    <p>Choisissez votre date et heure puis réservez directement via WhatsApp. Simple, rapide et efficace.</p>
-                    <a href="#reservation" class="btn-service">
+                    <p>Choisissez votre date et heure puis réservez directement en ligne. Simple, rapide et efficace.</p>
+                    <a href="reservation.html" class="btn-service">
                         <i class="fas fa-arrow-right"></i> Réserver
                     </a>
                 </div>
@@ -1386,7 +1386,7 @@ ul {
                         <li><i class="fas fa-check"></i> Vous gagnez 10%</li>
                         <li><i class="fas fa-check"></i> Votre ami gagne 10%</li>
                     </ul>
-                    <a href="https://wa.me/213771129469?text=Bonjour, je souhaite participer au programme de parrainage." target="_blank" class="btn-service">
+                    <a href="reservation.html" class="btn-service">
                         <i class="fas fa-arrow-right"></i> Participer
                     </a>
                 </div>
@@ -1401,7 +1401,7 @@ ul {
                         <li><i class="fas fa-check"></i> Cadeaux</li>
                         <li><i class="fas fa-check"></i> Promotions exclusives</li>
                     </ul>
-                    <a href="https://wa.me/213771129469?text=Bonjour, je souhaite des informations sur les abonnements premium." target="_blank" class="btn-service">
+                    <a href="reservation.html" class="btn-service">
                         <i class="fas fa-arrow-right"></i> Découvrir
                     </a>
                 </div>
@@ -1411,84 +1411,16 @@ ul {
 
 
     <!-- ================================== -->
-    <!-- FORMULAIRE DE RÉSERVATION          -->
+    <!-- RÉSERVATION REDIRECT               -->
     <!-- ================================== -->
     <section class="reservation-section" id="reservation">
-        <div class="container">
-            <div class="reservation-form">
-                <div class="section-title">
-                    <h2><i class="fab fa-whatsapp"></i> Réservez votre Rendez-vous</h2>
-                    <p>Remplissez le formulaire et confirmez via WhatsApp</p>
-                </div>
-                <form id="reservationForm">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="fullName">Nom complet *</label>
-                            <input type="text" id="fullName" placeholder="Votre nom complet" required>
-                            <span class="form-error">Veuillez entrer votre nom</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Téléphone *</label>
-                            <input type="tel" id="phone" placeholder="07XX XX XX XX" required>
-                            <span class="form-error">Veuillez entrer un numéro valide</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" placeholder="votre@email.com">
-                            <span class="form-error">Veuillez entrer un email valide</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="carBrand">Marque du véhicule *</label>
-                            <input type="text" id="carBrand" placeholder="Ex: Toyota, Peugeot..." required>
-                            <span class="form-error">Veuillez entrer la marque</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="carType">Type du véhicule *</label>
-                            <select id="carType" required>
-                                <option value="">-- Sélectionner --</option>
-                                <option value="Berline">Berline</option>
-                                <option value="SUV">SUV</option>
-                                <option value="4x4">4x4</option>
-                                <option value="Citadine">Citadine</option>
-                                <option value="Utilitaire">Utilitaire</option>
-                                <option value="Autre">Autre</option>
-                            </select>
-                            <span class="form-error">Veuillez sélectionner un type</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="service">Service demandé *</label>
-                            <select id="service" required>
-                                <option value="">-- Sélectionner --</option>
-                                <option value="Lavage Extérieur">Lavage Extérieur</option>
-                                <option value="Lavage Intérieur">Lavage Intérieur</option>
-                                <option value="Lavage Complet">Lavage Complet (Int + Ext)</option>
-                                <option value="Lavage Premium">Lavage Premium</option>
-                                <option value="Polissage">Polissage</option>
-                                <option value="Nettoyage Moteur">Nettoyage Moteur</option>
-                            </select>
-                            <span class="form-error">Veuillez sélectionner un service</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="date">Date *</label>
-                            <input type="date" id="date" required>
-                            <span class="form-error">Veuillez choisir une date</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="time">Heure *</label>
-                            <input type="time" id="time" required>
-                            <span class="form-error">Veuillez choisir une heure</span>
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="message">Message (optionnel)</label>
-                            <textarea id="message" placeholder="Précisions supplémentaires..."></textarea>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-reserve">
-                        <i class="fab fa-whatsapp"></i>
-                        Réserver via WhatsApp
-                    </button>
-                </form>
-            </div>
+        <div class="container" style="text-align:center; padding: 60px 20px;">
+            <h2 style="color:var(--blanc); font-size:2rem; margin-bottom:15px;">📅 Prenez Rendez-vous</h2>
+            <p style="color:rgba(255,255,255,0.8); margin-bottom:30px; font-size:1.1rem;">Réservez votre lavage en quelques clics</p>
+            <a href="reservation.html" class="btn-primary" style="font-size:1.1rem; padding:18px 40px;">
+                <i class="fas fa-calendar-check"></i>
+                Réserver Maintenant
+            </a>
         </div>
     </section>
 
@@ -1677,9 +1609,9 @@ ul {
         <div class="container">
             <h2 class="animate-on-scroll">Réservez votre lavage maintenant</h2>
             <p class="animate-on-scroll">Profitez de notre offre VIP et retrouvez un véhicule comme neuf.</p>
-            <a href="https://wa.me/213771129469?text=Bonjour MontPlaisir Lavage, je souhaite réserver un rendez-vous." target="_blank" class="btn-cta-whatsapp animate-on-scroll">
-                <i class="fab fa-whatsapp"></i>
-                Réserver sur WhatsApp
+            <a href="reservation.html" class="btn-cta-whatsapp animate-on-scroll">
+                <i class="fas fa-calendar-check"></i>
+                Prendre Rendez-vous
             </a>
         </div>
     </section>
@@ -1700,7 +1632,6 @@ ul {
                     <ul class="footer-contact">
                         <li><i class="fas fa-map-marker-alt"></i> Sidi Bel Abbès – Montplaisir</li>
                         <li><i class="fas fa-phone"></i> 07 71 12 94 69</li>
-                        <li><i class="fab fa-whatsapp"></i> +213 771 12 94 69</li>
                         <li><i class="fas fa-clock"></i> Lundi – Dimanche : 08h00 – 20h00</li>
                     </ul>
                 </div>
@@ -1709,7 +1640,7 @@ ul {
                     <ul>
                         <li><a href="#hero">Accueil</a></li>
                         <li><a href="#services">Services</a></li>
-                        <li><a href="#reservation">Réservation</a></li>
+                        <li><a href="reservation.html">Réservation</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
@@ -1885,111 +1816,6 @@ ul {
         if (e.target === e.currentTarget) closeLightbox();
     });
 
-
-    // ================================== //
-    // FORMULAIRE & WHATSAPP              //
-    // ================================== //
-    const reservationForm = document.getElementById('reservationForm');
-
-    // Définir la date minimale (aujourd'hui)
-    const dateInput = document.getElementById('date');
-    const today = new Date().toISOString().split('T')[0];
-    dateInput.setAttribute('min', today);
-
-    reservationForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        // Récupération des valeurs
-        const fullName = document.getElementById('fullName').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const carBrand = document.getElementById('carBrand').value.trim();
-        const carType = document.getElementById('carType').value;
-        const service = document.getElementById('service').value;
-        const date = document.getElementById('date').value;
-        const time = document.getElementById('time').value;
-        const message = document.getElementById('message').value.trim();
-
-        // Validation
-        let isValid = true;
-
-        // Reset erreurs
-        document.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
-
-        if (!fullName) {
-            document.getElementById('fullName').parentElement.classList.add('error');
-            isValid = false;
-        }
-        if (!phone || phone.length < 8) {
-            document.getElementById('phone').parentElement.classList.add('error');
-            isValid = false;
-        }
-        if (email && !validateEmail(email)) {
-            document.getElementById('email').parentElement.classList.add('error');
-            isValid = false;
-        }
-        if (!carBrand) {
-            document.getElementById('carBrand').parentElement.classList.add('error');
-            isValid = false;
-        }
-        if (!carType) {
-            document.getElementById('carType').parentElement.classList.add('error');
-            isValid = false;
-        }
-        if (!service) {
-            document.getElementById('service').parentElement.classList.add('error');
-            isValid = false;
-        }
-        if (!date) {
-            document.getElementById('date').parentElement.classList.add('error');
-            isValid = false;
-        }
-        if (!time) {
-            document.getElementById('time').parentElement.classList.add('error');
-            isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // Construire le message WhatsApp
-        const whatsappMessage = `Bonjour MontPlaisir Lavage,
-
-Je souhaite réserver un rendez-vous.
-
-*Nom :* ${fullName}
-*Téléphone :* ${phone}
-*Véhicule :* ${carBrand} (${carType})
-*Service :* ${service}
-*Date :* ${formatDate(date)}
-*Heure :* ${time}
-${message ? `*Message :* ${message}` : ''}
-
-Merci.`;
-
-        // Encoder et ouvrir WhatsApp
-        const encodedMessage = encodeURIComponent(whatsappMessage);
-        const whatsappURL = `https://wa.me/213771129469?text=${encodedMessage}`;
-        window.open(whatsappURL, '_blank');
-    });
-
-    // Validation email
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    // Formater la date
-    function formatDate(dateStr) {
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(dateStr).toLocaleDateString('fr-FR', options);
-    }
-
-    // Retirer l'erreur au focus
-    document.querySelectorAll('.form-group input, .form-group select, .form-group textarea').forEach(input => {
-        input.addEventListener('focus', () => {
-            input.parentElement.classList.remove('error');
-        });
-    });
 
     // ================================== //
     // SMOOTH SCROLL POLYFILL             //
