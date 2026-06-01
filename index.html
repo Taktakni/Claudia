@@ -1841,10 +1841,101 @@ ul {
 
     </script>
 
-    <!-- Auth System -->
+    <!-- Database & Auth -->
+    <script src="db.js"></script>
     <script src="db-clients.js"></script>
     <script>
-    // Mettre à jour le bouton header selon l'état de connexion
+    'use strict';
+
+    // ================================== //
+    // CHARGER CONTENU DYNAMIQUE DEPUIS DB//
+    // ================================== //
+    (function loadDynamicContent() {
+
+        // --- HOMEPAGE CONTENT ---
+        const hp = MontplaisirDB.getHomepage();
+        if (hp && hp.heroTitle) {
+            // Hero
+            const heroH1 = document.querySelector('.hero h1');
+            if (heroH1) heroH1.innerHTML = hp.heroTitle + '<br><span>' + hp.heroSubtitle + '</span>';
+            const offerHL = document.querySelector('.offer-highlight');
+            if (offerHL) offerHL.textContent = hp.heroOffer;
+
+            // VIP
+            const vipTitle = document.querySelector('.vip-card h2');
+            if (vipTitle) vipTitle.textContent = '🎁 ' + hp.vipTitle;
+            const vipOffer = document.querySelector('.vip-offer-text');
+            if (vipOffer) vipOffer.innerHTML = hp.vipOffer.replace('=', '<br>=');
+            const vipBonusList = document.querySelector('.vip-bonus');
+            if (vipBonusList && hp.vipBonus && hp.vipBonus.length > 0) {
+                vipBonusList.innerHTML = hp.vipBonus.map(b => 
+                    '<li><i class="fas fa-check-circle"></i> ' + b + '</li>'
+                ).join('');
+            }
+
+            // Stats
+            const statNumbers = document.querySelectorAll('.stat-number');
+            if (statNumbers.length >= 4) {
+                statNumbers[0].setAttribute('data-target', hp.statClients || 500);
+                statNumbers[1].setAttribute('data-target', hp.statLavages || 1000);
+                statNumbers[2].setAttribute('data-target', hp.statNote || 5);
+                statNumbers[3].setAttribute('data-target', hp.statSatisfaction || 98);
+            }
+
+            // CTA
+            const ctaH2 = document.querySelector('.cta-section h2');
+            if (ctaH2) ctaH2.textContent = hp.ctaTitle;
+            const ctaP = document.querySelector('.cta-section p');
+            if (ctaP) ctaP.textContent = hp.ctaText;
+        }
+
+        // --- GALERIE DYNAMIQUE ---
+        const gallery = MontplaisirDB.getAllGallery();
+        if (gallery && gallery.length > 0) {
+            const galleryGrid = document.querySelector('.gallery-grid');
+            if (galleryGrid) {
+                galleryGrid.innerHTML = gallery.map(item => {
+                    if (item.type === 'video') {
+                        return `<div class="gallery-item animate-on-scroll">
+                            <iframe src="${item.url}" style="width:100%;height:100%;border:none;border-radius:20px;" allowfullscreen loading="lazy"></iframe>
+                            <div class="gallery-overlay"><span>${item.caption}</span></div>
+                        </div>`;
+                    }
+                    return `<div class="gallery-item animate-on-scroll" onclick="openLightbox(this)">
+                        <img src="${item.url}" alt="${item.caption}" loading="lazy">
+                        <div class="gallery-overlay"><span>${item.caption}</span></div>
+                    </div>`;
+                }).join('');
+
+                // Re-observe new elements
+                galleryGrid.querySelectorAll('.animate-on-scroll').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+        }
+
+        // --- AVIS DYNAMIQUES (seulement les approuvés) ---
+        const reviews = MontplaisirDB.getApprovedReviews();
+        if (reviews && reviews.length > 0) {
+            const slider = document.querySelector('.reviews-slider');
+            if (slider) {
+                const stars = '<i class="fas fa-star"></i>'.repeat(5);
+                // Doubler pour effet infini
+                const cards = reviews.map(r => `
+                    <div class="review-card">
+                        <div class="review-stars">${'<i class="fas fa-star"></i>'.repeat(r.rating)}</div>
+                        <p class="review-text">"${r.text}"</p>
+                        <span class="review-author">— ${r.name}</span>
+                    </div>`).join('');
+                slider.innerHTML = cards + cards;
+            }
+        }
+
+    })();
+
+    // ================================== //
+    // AUTH HEADER BUTTON                 //
+    // ================================== //
     (function() {
         const authBtn = document.getElementById('headerAuthBtn');
         const authText = document.getElementById('headerAuthText');
